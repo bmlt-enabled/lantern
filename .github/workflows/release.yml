@@ -41,11 +41,8 @@ jobs:
           echo "${GITHUB_SHA}" > lantern/build.txt
           make build                                                              # produces ${BUILD_DIR}/${THEME_SLUG}.zip
           mkdir -p "${DIST_DIR_GITHUB}"
-          TAGGED="${THEME_SLUG}-${GITHUB_REF_NAME}.zip"
           cp "${BUILD_DIR}/${THEME_SLUG}.zip" "${DIST_DIR_GITHUB}/${GITHUB_RELEASE_FILENAME}"
-          cp "${BUILD_DIR}/${THEME_SLUG}.zip" "${DIST_DIR_GITHUB}/${TAGGED}"
           echo "ARTIFACT_PATH=${DIST_DIR_GITHUB}/${GITHUB_RELEASE_FILENAME}" >> $GITHUB_ENV
-          echo "ARTIFACT_TAGGED=${DIST_DIR_GITHUB}/${TAGGED}" >> $GITHUB_ENV
 
       - name: Generate release notes 📝
         if: github.ref_type == 'tag'
@@ -61,7 +58,7 @@ jobs:
         if: github.ref_type == 'tag'
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "${{ env.ARTIFACT_PATH }},${{ env.ARTIFACT_TAGGED }}"
+          artifacts: ${{ env.ARTIFACT_PATH }}
           bodyFile: "release-notes.md"
           prerelease: ${{ env.RELEASE_TYPE }}
           generateReleaseNotes: false
