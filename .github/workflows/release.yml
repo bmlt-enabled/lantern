@@ -36,16 +36,16 @@ jobs:
       - name: Build theme zip 🔧
         id: build-package
         run: |
-          export ZIP_FILENAME=${THEME_SLUG}-${GITHUB_REF_NAME}.zip
           find ./lantern -type d -print0 | xargs -0 chmod 755
           find ./lantern -name '*.php' -print0 | xargs -0 chmod 644
           echo "${GITHUB_SHA}" > lantern/build.txt
-          make build
+          make build                                                              # produces ${BUILD_DIR}/${THEME_SLUG}.zip
           mkdir -p "${DIST_DIR_GITHUB}"
+          TAGGED="${THEME_SLUG}-${GITHUB_REF_NAME}.zip"
           cp "${BUILD_DIR}/${THEME_SLUG}.zip" "${DIST_DIR_GITHUB}/${GITHUB_RELEASE_FILENAME}"
-          cp "${BUILD_DIR}/${THEME_SLUG}.zip" "${DIST_DIR_GITHUB}/${ZIP_FILENAME}"
+          cp "${BUILD_DIR}/${THEME_SLUG}.zip" "${DIST_DIR_GITHUB}/${TAGGED}"
           echo "ARTIFACT_PATH=${DIST_DIR_GITHUB}/${GITHUB_RELEASE_FILENAME}" >> $GITHUB_ENV
-          echo "ARTIFACT_TAGGED=${DIST_DIR_GITHUB}/${ZIP_FILENAME}" >> $GITHUB_ENV
+          echo "ARTIFACT_TAGGED=${DIST_DIR_GITHUB}/${TAGGED}" >> $GITHUB_ENV
 
       - name: Generate release notes 📝
         if: github.ref_type == 'tag'
