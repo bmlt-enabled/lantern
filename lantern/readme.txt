@@ -90,5 +90,7 @@ Yes. All user-facing strings use the `lantern` text domain. Drop a `.mo` file in
 
 == Changelog ==
 
+See [CHANGELOG.md](https://github.com/bmlt-enabled/bmlt-wp-theme/blob/main/CHANGELOG.md) for the full version history.
+
 = 1.0.0 =
 * Initial release.

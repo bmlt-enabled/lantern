@@ -1,0 +1,36 @@
+name: "pull-request"
+
+on:
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  lint:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out code 🛒
+        uses: actions/checkout@v6
+
+      - name: Setup PHP 🐫
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.3
+
+      - name: Linter 🧹
+        run: make lint
+
+  build-smoke:
+    runs-on: ubuntu-24.04
+    needs: [lint]
+    steps:
+      - name: Check out code 🛒
+        uses: actions/checkout@v6
+
+      - name: Build theme zip 🔧
+        run: make build
+
+      - name: Verify zip contents 🔎
+        run: |
+          unzip -l build/lantern.zip | head -40
+          unzip -p build/lantern.zip style.css | head -20
+          test -n "$(unzip -p build/lantern.zip style.css | grep '^Theme Name:')" || { echo 'style.css is missing the theme header'; exit 1; }

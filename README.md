@@ -97,14 +97,28 @@ bmlt-wp-theme/
 │   ├── inc/                ← customizer.php, template-tags.php, widgets.php
 │   ├── assets/             ← css/{theme,plugins,editor}, js/theme.js
 │   └── readme.txt          ← WP.org-style readme (theme metadata)
+├── .github/
+│   ├── workflows/          ← release.yml, pull-request.yml, latest.yml
+│   └── scripts/            ← release-notes.sh (CHANGELOG.md → release body)
 ├── Dockerfile              ← WordPress beta + PHP 8.3 + xdebug
 ├── docker-compose.yml      ← wordpress + mariadb
 ├── Makefile                ← help / build / dev / install / lint / nuke / …
 ├── README.md               ← you are here
+├── CHANGELOG.md            ← Keep a Changelog format; release notes pulled from here
 ├── CONTRIBUTING.md
 ├── AGENTS.md               ← guidance for AI agents working on this repo
 └── LICENSE                 ← GPL v2
 ```
+
+## Releases
+
+Cutting a release is tag-driven: move the `## [Unreleased]` entries in
+[CHANGELOG.md](CHANGELOG.md) under a new `## [X.Y.Z] - YYYY-MM-DD` heading,
+bump the version in `lantern/style.css` / `functions.php` / `readme.txt`,
+then `git tag vX.Y.Z && git push origin vX.Y.Z`. GitHub Actions lints,
+builds `lantern.zip`, parses the matching CHANGELOG section, and publishes
+the release automatically. Tags containing `beta`, `rc`, or `alpha` are
+marked as pre-releases.
 
 ## Contributing
 

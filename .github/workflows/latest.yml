@@ -1,0 +1,39 @@
+name: "latest"
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  lint:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out code 🛒
+        uses: actions/checkout@v6
+
+      - name: Setup PHP 🐫
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.3
+
+      - name: Linter 🧹
+        run: make lint
+
+  build:
+    runs-on: ubuntu-24.04
+    needs: [lint]
+    steps:
+      - name: Check out code 🛒
+        uses: actions/checkout@v6
+
+      - name: Build theme zip 🔧
+        run: |
+          echo "${GITHUB_SHA}" > lantern/build.txt
+          make build
+
+      - name: Upload artifact 📦
+        uses: actions/upload-artifact@v4
+        with:
+          name: lantern-${{ github.run_number }}-${{ github.sha }}
+          path: build/lantern.zip
+          retention-days: 14

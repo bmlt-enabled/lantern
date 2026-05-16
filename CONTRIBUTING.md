@@ -85,13 +85,34 @@ If you add a feature large enough to warrant a test, please include manual repro
 
 ## Release process
 
-Releases follow the WordPress.org pattern. Bump `Version:` in:
+Releases are tag-driven. The `release` workflow runs on every pushed tag,
+lints the theme, builds the zip, parses [CHANGELOG.md](CHANGELOG.md) for the
+matching version section, and publishes a GitHub release with that body and
+the zip attached.
 
-- `lantern/style.css`
-- `lantern/functions.php` (`LANTERN_VERSION` constant)
-- `lantern/readme.txt` (`Stable tag:`)
+To cut a release:
 
-Then `make build` produces `build/lantern.zip`. Tag the release in GitHub.
+1. Move the unreleased entries in `CHANGELOG.md` under a new heading of the
+   form `## [X.Y.Z] - YYYY-MM-DD`. The version inside the brackets is what
+   the workflow grep'es for.
+2. Bump the version number in matching places:
+   - `lantern/style.css` (`Version:` header)
+   - `lantern/functions.php` (`LANTERN_VERSION` constant)
+   - `lantern/readme.txt` (`Stable tag:`)
+3. Commit, then tag and push:
+   ```bash
+   git tag v1.2.0           # or 1.2.0, or 1.2.0-beta1
+   git push origin v1.2.0
+   ```
+4. GitHub Actions builds and publishes the release automatically. Tags
+   containing `beta`, `rc`, or `alpha` are marked as pre-releases.
+
+The release notes parser is `.github/scripts/release-notes.sh`. Run it
+locally to preview what the release body will look like:
+
+```bash
+./.github/scripts/release-notes.sh v1.2.0 CHANGELOG.md
+```
 
 ## Code of conduct
 
