@@ -1,0 +1,7 @@
+build/
+logs/
+.git/
+.github/
+.claude/
+.DS_Store
+node_modules/

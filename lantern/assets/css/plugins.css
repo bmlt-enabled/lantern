@@ -1,0 +1,556 @@
+/* ============================================================
+   Lantern — Plugin overrides
+   Retunes the output of BMLT plugins to inherit the Lantern
+   aesthetic. Kept defensive: shortcodes that don't match are
+   simply no-ops. Use class hooks the plugins expose; avoid
+   reaching into their internals.
+   ============================================================ */
+
+/* ----------------------------------------------------------------
+   Crumb (meeting finder)
+   Crumb exposes its theme via CSS custom properties on #crumb-widget.
+   We remap those tokens to Lantern's palette so the finder inherits
+   the theme without any JS or markup changes.
+   Token reference: https://crumb.bmlt.app/  (Customizing the widget)
+   ---------------------------------------------------------------- */
+.lantern-crumb-wrap {
+    background: var(--lantern-paper);
+    border: 1px solid var(--lantern-ink-line);
+    border-radius: var(--lantern-radius);
+    overflow: hidden;
+    min-height: 60vh;
+}
+
+#crumb-widget {
+    /* Type */
+    --bmlt-font-family:        var(--lantern-body);
+    --bmlt-font-size:          1rem;
+
+    /* Surfaces */
+    --bmlt-background:         var(--lantern-paper);
+    --bmlt-surface:            var(--lantern-paper);
+    --bmlt-row-alt:            var(--lantern-paper-deep);
+    --bmlt-hover:              var(--lantern-paper-deep);
+
+    /* Text */
+    --bmlt-text:               var(--lantern-ink);
+    --bmlt-text-secondary:     var(--lantern-ink-soft);
+    --bmlt-text-muted:         var(--lantern-ink-faint);
+
+    /* Lines */
+    --bmlt-border:             var(--lantern-ink-line);
+    --bmlt-divider:            var(--lantern-ink-hair);
+    --bmlt-border-radius:      var(--lantern-radius);
+
+    /* Accent — terracotta ember for active state, links, focus */
+    --bmlt-accent:             var(--lantern-ember);
+    --bmlt-accent-light:       color-mix(in srgb, var(--lantern-ember) 12%, var(--lantern-paper));
+
+    /* In-person badge — sage on warm parchment */
+    --bmlt-in-person:          color-mix(in srgb, var(--lantern-sage) 80%, var(--lantern-ink));
+    --bmlt-in-person-bg:       color-mix(in srgb, var(--lantern-sage) 18%, var(--lantern-paper));
+
+    /* Virtual badge — ink-on-paper tint */
+    --bmlt-virtual:            var(--lantern-ink);
+    --bmlt-virtual-bg:         color-mix(in srgb, var(--lantern-ink)  8%, var(--lantern-paper));
+
+    /* In-progress banner — gold highlight */
+    --bmlt-in-progress-bg:     color-mix(in srgb, var(--lantern-gold) 20%, var(--lantern-paper));
+    --bmlt-in-progress-text:   color-mix(in srgb, var(--lantern-gold) 60%, var(--lantern-ink));
+}
+
+/* ----------------------------------------------------------------
+   Crouton (BMLT meeting finder)
+   Crouton ships Bootstrap-flavored markup with `bmlt-*` class hooks
+   and `.btn .btn-primary` buttons. We target the classes it renders
+   directly. Keep this section minimal — Crouton's own stylesheet
+   does most of the layout work; we only retune surfaces, buttons,
+   tabs and tables to the Lantern palette.
+   ---------------------------------------------------------------- */
+.lantern-crouton-wrap {
+    background: var(--lantern-paper);
+    border: 1px solid var(--lantern-ink-line);
+    border-radius: var(--lantern-radius);
+    padding: clamp(1rem, 2vw, 1.75rem);
+    font-family: var(--lantern-body);
+    color: var(--lantern-ink);
+}
+
+.lantern-crouton-wrap .bmlt-header,
+.lantern-crouton-wrap .bmlt-page {
+    color: var(--lantern-ink);
+}
+
+/* Primary buttons (day chips, grouping buttons, map toggle) */
+.lantern-crouton-wrap .bmlt-button-container .btn,
+.lantern-crouton-wrap .btn.btn-primary {
+    background: var(--lantern-ink);
+    border-color: var(--lantern-ink);
+    color: var(--lantern-paper);
+    border-radius: 999px;
+    font-family: var(--lantern-body);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    padding: 0.45rem 0.95rem;
+    transition: background 200ms var(--lantern-ease), border-color 200ms var(--lantern-ease);
+}
+.lantern-crouton-wrap .bmlt-button-container .btn:hover,
+.lantern-crouton-wrap .btn.btn-primary:hover,
+.lantern-crouton-wrap .bmlt-button-container .btn.active,
+.lantern-crouton-wrap .btn.btn-primary.active {
+    background: var(--lantern-ember);
+    border-color: var(--lantern-ember);
+    color: var(--lantern-paper);
+}
+
+/* Tabs */
+.lantern-crouton-wrap .nav-tabs {
+    border-bottom: 1px solid var(--lantern-ink-line);
+}
+.lantern-crouton-wrap .nav-tabs > li > a,
+.lantern-crouton-wrap .nav-tabs > li.active > a {
+    font-family: var(--lantern-body);
+    font-weight: 600;
+    color: var(--lantern-ink-faint);
+    border: 0;
+    background: transparent;
+    border-radius: 0;
+    position: relative;
+}
+.lantern-crouton-wrap .nav-tabs > li.active > a,
+.lantern-crouton-wrap .nav-tabs > li > a:hover {
+    color: var(--lantern-ink);
+    background: transparent;
+}
+.lantern-crouton-wrap .nav-tabs > li.active > a::after {
+    content: "";
+    position: absolute;
+    left: 0.5rem; right: 0.5rem; bottom: -1px;
+    height: 2px;
+    background: var(--lantern-ember);
+}
+
+/* Table */
+.lantern-crouton-wrap .bmlt-table,
+.lantern-crouton-wrap table.table {
+    background: var(--lantern-paper);
+    color: var(--lantern-ink);
+    border-color: var(--lantern-ink-line) !important;
+}
+.lantern-crouton-wrap .bmlt-table thead th,
+.lantern-crouton-wrap table.table thead th {
+    background: var(--lantern-paper-deep);
+    color: var(--lantern-ink);
+    font-family: var(--lantern-body);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-size: var(--lantern-step--2);
+    border-color: var(--lantern-ink-line) !important;
+}
+.lantern-crouton-wrap .bmlt-table td,
+.lantern-crouton-wrap table.table td {
+    border-color: var(--lantern-ink-hair) !important;
+}
+.lantern-crouton-wrap .table-hover tbody tr:hover {
+    background: var(--lantern-paper-deep);
+}
+
+/* Select2 + filter dropdowns */
+.lantern-crouton-wrap .crouton-select,
+.lantern-crouton-wrap .select2-container--default .select2-selection--single {
+    border: 1px solid var(--lantern-ink-line) !important;
+    border-radius: 999px !important;
+    background: var(--lantern-paper) !important;
+    font-family: var(--lantern-body) !important;
+    color: var(--lantern-ink) !important;
+}
+.lantern-crouton-wrap .select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background: var(--lantern-ember) !important;
+    color: var(--lantern-paper) !important;
+}
+
+/* Map embed */
+.lantern-crouton-wrap .bmlt-map {
+    border-radius: var(--lantern-radius);
+    overflow: hidden;
+}
+
+/* ----------------------------------------------------------------
+   Mayo (events)
+   ---------------------------------------------------------------- */
+.lantern-mayo-wrap .mayo-event-list,
+.mayo-event-list {
+    display: grid;
+    gap: 1rem;
+}
+
+.lantern-mayo-wrap .mayo-event,
+.mayo-event-list .mayo-event-item {
+    border: 1px solid var(--lantern-ink-line);
+    background: var(--lantern-paper);
+    border-radius: var(--lantern-radius);
+    padding: 1.25rem 1.5rem;
+    transition: border-color 200ms var(--lantern-ease), transform 200ms var(--lantern-ease);
+}
+.lantern-mayo-wrap .mayo-event:hover,
+.mayo-event-list .mayo-event-item:hover {
+    border-color: var(--lantern-ink);
+    transform: translateY(-1px);
+}
+
+.lantern-mayo-wrap .mayo-event-title,
+.mayo-event-list .mayo-event-title,
+.mayo-event-list h3 {
+    font-family: var(--lantern-display) !important;
+    font-weight: 500 !important;
+    letter-spacing: -0.01em;
+    color: var(--lantern-ink);
+    margin: 0 0 0.4rem;
+}
+
+.lantern-mayo-wrap .mayo-event-date,
+.mayo-event-list .mayo-event-date,
+.mayo-event-list time {
+    color: var(--lantern-ember-deep);
+    font-size: var(--lantern-step--1);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+}
+
+.mayo-event-filters,
+.lantern-mayo-wrap .mayo-event-filters {
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+.mayo-event-filters select,
+.mayo-event-filters input[type="text"] {
+    padding: 0.6rem 0.85rem;
+    border-radius: 999px;
+    border: 1px solid var(--lantern-ink-line);
+    background: var(--lantern-paper);
+    color: var(--lantern-ink);
+    font-family: var(--lantern-body);
+    font-size: var(--lantern-step--1);
+}
+
+/* Mayo form */
+.mayo-event-form input[type="text"],
+.mayo-event-form input[type="email"],
+.mayo-event-form input[type="url"],
+.mayo-event-form input[type="date"],
+.mayo-event-form input[type="time"],
+.mayo-event-form textarea,
+.mayo-event-form select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--lantern-ink-line);
+    border-radius: var(--lantern-radius);
+    background: var(--lantern-paper);
+    font-family: var(--lantern-body);
+    font-size: var(--lantern-step-0);
+    color: var(--lantern-ink);
+    margin-bottom: 1rem;
+}
+.mayo-event-form label {
+    display: block;
+    font-size: var(--lantern-step--1);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.3rem;
+}
+.mayo-event-form button,
+.mayo-event-form input[type="submit"] {
+    background: var(--lantern-ember);
+    color: var(--lantern-paper);
+    border: 0;
+    padding: 0.85rem 1.5rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-family: var(--lantern-body);
+    cursor: pointer;
+    transition: background 200ms var(--lantern-ease);
+}
+.mayo-event-form button:hover,
+.mayo-event-form input[type="submit"]:hover { background: var(--lantern-ember-deep); }
+
+/* ----------------------------------------------------------------
+   Fetch Meditation (JFT / SPAD)
+   ---------------------------------------------------------------- */
+.fetch-meditation,
+.lantern-meditation-wrap .fm-container,
+.lantern-meditation-wrap [class*="fetch-meditation"] {
+    font-family: var(--lantern-body) !important;
+    color: var(--lantern-ink);
+}
+
+.fetch-meditation h1,
+.fetch-meditation h2,
+.fetch-meditation .fm-title,
+.fetch-meditation .title {
+    font-family: var(--lantern-display) !important;
+    font-weight: 480 !important;
+    color: var(--lantern-ink);
+    letter-spacing: -0.02em;
+}
+
+.fetch-meditation .fm-quote,
+.fetch-meditation .quote {
+    font-family: var(--lantern-display) !important;
+    font-style: italic;
+    font-size: var(--lantern-step-2);
+    line-height: 1.4;
+    border-left: 2px solid var(--lantern-ember);
+    padding-left: 1.25rem;
+    color: var(--lantern-ink-soft);
+}
+
+.fetch-meditation .fm-page,
+.fetch-meditation .page,
+.fetch-meditation .source {
+    color: var(--lantern-ink-faint);
+    font-size: var(--lantern-step--1);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.fetch-meditation .fm-thought,
+.fetch-meditation .thought {
+    border-top: 1px solid var(--lantern-ink-line);
+    border-bottom: 1px solid var(--lantern-ink-line);
+    padding: 1.5rem 0;
+    font-family: var(--lantern-display);
+    font-style: italic;
+    color: var(--lantern-ink-soft);
+}
+
+/* Excerpt mode used on the homepage today panel */
+.lantern-today__main .fetch-meditation,
+.lantern-today__main .fm-container {
+    background: transparent !important;
+    padding: 0 !important;
+    border: 0 !important;
+}
+.lantern-today__main .fetch-meditation .fm-title,
+.lantern-today__main .fetch-meditation .title,
+.lantern-today__main .fetch-meditation h2 {
+    font-size: var(--lantern-step-3) !important;
+    margin: 0 0 0.75rem !important;
+}
+.lantern-today__main .fetch-meditation a.read-more,
+.lantern-today__main .fetch-meditation .read-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: var(--lantern-step--1);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--lantern-ember-deep);
+    text-decoration: none;
+    margin-top: 1rem;
+}
+
+/* Tabbed both view */
+.fetch-meditation .fm-tabs,
+.fetch-meditation .tabs {
+    display: flex;
+    gap: 0.5rem;
+    border-bottom: 1px solid var(--lantern-ink-line);
+    margin-bottom: 1.5rem;
+}
+.fetch-meditation .fm-tabs button,
+.fetch-meditation .tabs button {
+    background: transparent;
+    border: 0;
+    padding: 0.75rem 1rem;
+    font-family: var(--lantern-body);
+    font-weight: 600;
+    color: var(--lantern-ink-faint);
+    cursor: pointer;
+    letter-spacing: 0.04em;
+    position: relative;
+}
+.fetch-meditation .fm-tabs button[aria-selected="true"],
+.fetch-meditation .fm-tabs button.active,
+.fetch-meditation .tabs button.active {
+    color: var(--lantern-ink);
+}
+.fetch-meditation .fm-tabs button[aria-selected="true"]::after,
+.fetch-meditation .fm-tabs button.active::after,
+.fetch-meditation .tabs button.active::after {
+    content: "";
+    position: absolute;
+    left: 0.25rem; right: 0.25rem; bottom: -1px; height: 2px;
+    background: var(--lantern-ember);
+}
+
+/* ----------------------------------------------------------------
+   NACC (cleantime calculator)
+   ---------------------------------------------------------------- */
+.lantern-nacc-wrap [id*="nacc"],
+.lantern-nacc-wrap .nacc,
+.nacc-container {
+    border: 1px solid var(--lantern-ink-line);
+    background: var(--lantern-paper);
+    border-radius: var(--lantern-radius);
+    padding: clamp(1.5rem, 2vw, 2.5rem) !important;
+    font-family: var(--lantern-body);
+}
+
+.lantern-nacc-wrap input[type="date"],
+.lantern-nacc-wrap input[type="text"],
+.lantern-nacc-wrap select {
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--lantern-ink-line);
+    border-radius: var(--lantern-radius);
+    font-family: var(--lantern-body);
+    font-size: var(--lantern-step-0);
+    background: var(--lantern-paper);
+    color: var(--lantern-ink);
+}
+
+.lantern-nacc-wrap button,
+.lantern-nacc-wrap input[type="submit"],
+.lantern-nacc-wrap input[type="button"] {
+    background: var(--lantern-ink) !important;
+    color: var(--lantern-paper) !important;
+    border: 0 !important;
+    padding: 0.75rem 1.25rem !important;
+    border-radius: 999px !important;
+    font-family: var(--lantern-body);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.lantern-nacc-wrap .result,
+.lantern-nacc-wrap [class*="result"],
+.lantern-nacc-wrap [id*="result"] {
+    font-family: var(--lantern-display);
+    font-size: var(--lantern-step-3);
+    color: var(--lantern-ink);
+    letter-spacing: -0.01em;
+    margin-top: 1rem;
+}
+
+/* NACC keytag chips */
+.lantern-nacc-wrap [class*="keytag"],
+.lantern-nacc-wrap .tag {
+    border: 1px solid var(--lantern-ink-line) !important;
+    border-radius: 999px !important;
+    padding: 0.4rem 0.85rem !important;
+    font-size: var(--lantern-step--1) !important;
+    background: var(--lantern-paper) !important;
+    color: var(--lantern-ink) !important;
+    margin: 0.25rem !important;
+    display: inline-block;
+}
+
+/* ----------------------------------------------------------------
+   BMLT-Workflow (meeting update form)
+   ---------------------------------------------------------------- */
+.bmltwf,
+.bmltwf-meeting-update-form,
+.bmltwf-correspondence-form {
+    font-family: var(--lantern-body);
+}
+
+.bmltwf input[type="text"],
+.bmltwf input[type="email"],
+.bmltwf input[type="tel"],
+.bmltwf textarea,
+.bmltwf select,
+.bmltwf-meeting-update-form input,
+.bmltwf-meeting-update-form select,
+.bmltwf-meeting-update-form textarea,
+.bmltwf-correspondence-form input,
+.bmltwf-correspondence-form select,
+.bmltwf-correspondence-form textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--lantern-ink-line);
+    border-radius: var(--lantern-radius);
+    background: var(--lantern-paper);
+    font-family: var(--lantern-body);
+    font-size: var(--lantern-step-0);
+    color: var(--lantern-ink);
+    margin-bottom: 1rem;
+}
+
+.bmltwf label,
+.bmltwf-meeting-update-form label,
+.bmltwf-correspondence-form label {
+    display: block;
+    font-size: var(--lantern-step--1);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.3rem;
+    color: var(--lantern-ink);
+}
+
+.bmltwf button,
+.bmltwf input[type="submit"],
+.bmltwf-meeting-update-form button,
+.bmltwf-meeting-update-form input[type="submit"],
+.bmltwf-correspondence-form button,
+.bmltwf-correspondence-form input[type="submit"] {
+    background: var(--lantern-ember);
+    color: var(--lantern-paper);
+    border: 0;
+    padding: 0.85rem 1.5rem;
+    border-radius: 999px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: var(--lantern-body);
+    transition: background 200ms var(--lantern-ease);
+}
+.bmltwf button:hover,
+.bmltwf input[type="submit"]:hover,
+.bmltwf-meeting-update-form button:hover,
+.bmltwf-correspondence-form button:hover { background: var(--lantern-ember-deep); }
+
+/* ----------------------------------------------------------------
+   Bread (PDF meeting list — admin/shortcode rare; supports list shortcodes)
+   ---------------------------------------------------------------- */
+.bmlt-meeting-list,
+.bread-meeting-list {
+    border-top: 1px solid var(--lantern-ink-line);
+}
+.bmlt-meeting-list .meeting,
+.bread-meeting-list .meeting {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--lantern-ink-line);
+}
+
+/* ----------------------------------------------------------------
+   Notices (plugin not active)
+   ---------------------------------------------------------------- */
+.lantern-notice {
+    border: 1px dashed var(--lantern-ink-line);
+    background: var(--lantern-paper);
+    padding: clamp(1.5rem, 2vw, 2rem);
+    border-radius: var(--lantern-radius);
+}
+.lantern-notice h2 {
+    font-size: var(--lantern-step-2);
+    margin: 0 0 0.5rem;
+}
+
+/* ----------------------------------------------------------------
+   Gravity / WP Forms (commonly used by service bodies)
+   ---------------------------------------------------------------- */
+.gform_wrapper input[type="text"],
+.gform_wrapper input[type="email"],
+.gform_wrapper textarea,
+.gform_wrapper select,
+.wpforms-container input[type="text"],
+.wpforms-container input[type="email"],
+.wpforms-container textarea,
+.wpforms-container select {
+    border: 1px solid var(--lantern-ink-line) !important;
+    border-radius: var(--lantern-radius) !important;
+    padding: 0.75rem 1rem !important;
+    font-family: var(--lantern-body) !important;
+    background: var(--lantern-paper) !important;
+}

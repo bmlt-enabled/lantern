@@ -1,0 +1,39 @@
+services:
+  wordpress:
+    depends_on:
+      - db
+    build: .
+    restart: always
+    ports:
+      - 8080:80
+      - 7443:443
+    environment:
+      WORDPRESS_DEBUG: true
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+#      WORDPRESS_CONFIG_EXTRA: |
+#        define('WP_HOME', 'https://localhost:7443');
+#        define('WP_SITEURL', 'https://localhost:7443');
+    volumes:
+      # The Lantern theme — mounted at /wp-content/themes/lantern so the theme
+      # slug matches the directory name regardless of where this repo lives.
+      - ./lantern:/var/www/html/wp-content/themes/lantern
+      # The whole BMLT-enabled tree (siblings: crumb, mayo, bread, nacc,
+      # fetch-meditation, bmlt-workflow, etc.) gets mounted as the plugins
+      # directory. WordPress ignores directories without a plugin header,
+      # so the theme repo itself just sits there harmlessly.
+      - ../:/var/www/html/wp-content/plugins
+      - ./logs/:/var/log/apache2
+
+  db:
+    image: mariadb:10.11
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      MARIADB_ROOT_PASSWORD: somewordpress
+      MARIADB_DATABASE: wordpress
+      MARIADB_USER: wordpress
+      MARIADB_PASSWORD: wordpress

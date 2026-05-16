@@ -1,0 +1,94 @@
+=== Lantern ===
+
+Contributors: bmltenabled
+Tags: nonprofit, community, narcotics-anonymous, na, bmlt, block-styles, custom-colors, custom-logo, custom-menu, editor-style, full-width-template, translation-ready
+Requires at least: 6.4
+Tested up to: 6.9
+Requires PHP: 8.1
+Stable tag: 1.0.0
+License: GPL v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+
+Lantern is an editorial-style WordPress theme for Narcotics Anonymous service bodies. Drop in the BMLT plugins you already use and the site rebuilds itself around them.
+
+== Description ==
+
+Lantern is a generic, brandable WordPress theme designed for NA regions, areas, and zonal forums. It pairs a warm editorial aesthetic (Fraunces display serif on parchment, terracotta accents, sage and gold secondaries) with first-class integration of the BMLT plugin family. Where most NA service-body sites look corporate or generic, Lantern feels considered and human — like a quiet meeting room rather than an enterprise homepage.
+
+= Plugin integrations =
+
+Out of the box, Lantern auto-detects and integrates with:
+
+* **Crumb** or **Crouton** — either BMLT meeting finder works. The Meeting Finder page template embeds whichever is active; pick the one your service body already uses.
+* **Mayo Events Manager** — the homepage shows the next five upcoming events, and the Events page template renders the full list + submission form.
+* **Fetch Meditation** — the homepage "Today" panel shows the JFT excerpt; a dedicated Daily Meditation page template runs the tabbed both-books view.
+* **NACC** — the Cleantime Calculator page template renders the calculator with the Lantern type/color system.
+* **BMLT-Workflow** — the For Members page template can render the meeting update form.
+* **Bread** — the Members page links to the PDF meeting list when present.
+
+Every shortcode integration is defensive: if a plugin isn't installed, Lantern shows a clear notice with the plugin name and where to get it, instead of breaking.
+
+= Out-of-the-box pages =
+
+After install, create pages with these slugs (or pick them in Customize → BMLT & plugins → Meeting finder page) and Lantern will discover them automatically:
+
+* `/meetings` (or `/meeting-finder`) — uses Meeting Finder template
+* `/events` — uses Events template
+* `/cleantime` — uses Cleantime Calculator template
+* `/daily-meditation` (or `/meditation`) — uses Daily Meditation template
+* `/helpline` — uses Helpline template
+* `/public` — uses For the Public template
+* `/members` — uses For Members template
+* `/about` — pillar page (linked from hero)
+* `/newcomer`, `/for-families`, `/professionals`, `/literature` — linked from For the Public
+* `/minutes`, `/subcommittees`, `/meeting-changes`, `/service-guides`, `/meeting-list` — linked from For Members
+
+= Customizing =
+
+All branding lives in **Appearance → Customize**:
+
+* **Service Body** — name, tagline, founding year, weekly meeting count, area count
+* **Helpline** — phone number + supporting copy (shown in header, footer, homepage strip)
+* **BMLT & plugins** — root server URL + page assignments
+* **Homepage copy** — every line of homepage text is editable here
+* **Footer** — about blurb, disclaimer, motto/tradition line
+* **Palette** — override Paper, Ink, Ember, or Sage to recolor the entire theme
+
+Menus to assign (Appearance → Menus):
+
+* **Primary Navigation** — main header menu
+* **For the Public** — footer column
+* **For Members** — footer column
+* **Footer Links** — bottom footer column
+* **Utility** — top-right (reserved)
+
+== Installation ==
+
+1. Upload the `bmlt-wp-theme` folder to `/wp-content/themes/`, or install from a `.zip` via Appearance → Themes → Add New.
+2. Activate "Lantern" under Appearance → Themes.
+3. Visit Customize → Service Body, Helpline, and BMLT & plugins to enter your details.
+4. Install the BMLT plugins you'd like to use (Crumb, Mayo, Fetch Meditation, NACC, BMLT-Workflow, Bread).
+5. Create pages with the slugs listed above (or apply the matching Page Template from the page editor's Template selector).
+
+== Frequently Asked Questions ==
+
+= Do I have to install all the plugins? =
+
+No. Lantern detects each plugin independently. Each page template and homepage section degrades gracefully — if Fetch Meditation isn't active, the Today panel shows a friendly notice; if Mayo isn't active, the events strip is hidden, and so on. Install only what you need.
+
+= Can I change the colors? =
+
+Yes — Customize → Palette gives you four overrides (Paper, Ink, Ember, Sage). For deeper edits, every color is a CSS custom property in `style.css` (look for `--lantern-*`) and the same tokens are exposed via `theme.json` for the block editor.
+
+= Does it support the block editor? =
+
+Yes. `theme.json` ships the full Lantern palette, font families, and font sizes as block-editor presets. Editor styles match the front-end so the writing experience and reader experience stay aligned.
+
+= Is it translation-ready? =
+
+Yes. All user-facing strings use the `lantern` text domain. Drop a `.mo` file in `/wp-content/themes/bmlt-wp-theme/languages/`.
+
+== Changelog ==
+
+= 1.0.0 =
+* Initial release.
