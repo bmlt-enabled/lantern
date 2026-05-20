@@ -70,10 +70,17 @@ install:  ## One-shot: install WordPress, activate the theme + BMLT plugins, cre
 			--admin_password=admin \
 			--admin_email=admin@example.test \
 			--skip-email; \
-		wp rewrite structure "/%postname%/" --hard >/dev/null; \
+		wp rewrite structure "/%postname%/" >/dev/null; \
 		wp theme activate $(THEME_SLUG); \
 		for p in crumb mayo bread fetch-meditation nacc bmlt-workflow; do \
-			if [ -d wp-content/plugins/$$p ]; then wp plugin activate $$p || true; fi; \
+			if [ ! -d wp-content/plugins/$$p ]; then continue; fi; \
+			has_composer=$$(test -f wp-content/plugins/$$p/composer.json && echo yes); \
+			has_vendor=$$(test -f wp-content/plugins/$$p/vendor/autoload.php && echo yes); \
+			if [ "$$has_composer" = "yes" ] && [ "$$has_vendor" != "yes" ]; then \
+				echo "Skipping $$p — needs \`composer install\` in ../$$p first."; \
+				continue; \
+			fi; \
+			wp plugin activate $$p 2>/dev/null || echo "  ($$p failed to activate, skipping)"; \
 		done; \
 		for slug in home meetings events cleantime daily-meditation helpline public members about newcomer for-families professionals literature minutes subcommittees meeting-changes service-guides meeting-list; do \
 			id=$$(wp post list --post_type=page --name=$$slug --field=ID); \
@@ -106,3 +113,22 @@ install:  ## One-shot: install WordPress, activate the theme + BMLT plugins, cre
 .PHONY: open
 open:  ## Open the site in a browser
 	@command -v open >/dev/null && open http://localhost:8080 || echo "Visit http://localhost:8080"
+
+.PHONY: plugin-deps
+plugin-deps:  ## Run `composer install` in any sibling plugin that needs it (mayo, nacc, bmlt-workflow, etc.)
+	@for p in ../*/; do \
+		if [ -f "$$p/composer.json" ] && [ ! -f "$$p/vendor/autoload.php" ]; then \
+			echo "==> composer install in $$p"; \
+			(cd "$$p" && composer install --no-interaction --quiet) || echo "  (skipped — composer install failed)"; \
+		fi; \
+	done
+
+THEME_TEST_URL := https://raw.githubusercontent.com/WPTT/theme-unit-test/master/themeunittestdata.wordpress.xml
+
+.PHONY: theme-test-data
+theme-test-data:  ## Import the WPTT Theme Unit Test data (long titles, comments, unicode, galleries, etc.)
+	@curl -fsSL $(THEME_TEST_URL) -o /tmp/theme-unit-test-data.xml
+	@docker cp /tmp/theme-unit-test-data.xml $(BASENAME)-wordpress-1:/tmp/theme-unit-test-data.xml
+	@docker exec -u www-data -w /var/www/html $(BASENAME)-wordpress-1 bash -c '\
+		wp plugin is-active wordpress-importer 2>/dev/null || wp plugin install wordpress-importer --activate; \
+		wp import /tmp/theme-unit-test-data.xml --authors=create'

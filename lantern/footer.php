@@ -37,41 +37,36 @@
                 <?php endif; ?>
             </div>
 
-            <?php if ( has_nav_menu( 'public' ) ) : ?>
+            <?php
+            // Each footer column prefers a widget area when the user has placed
+            // widgets there; otherwise it falls back to the matching nav menu.
+            $columns = array(
+                array( 'footer-1', 'public',  __( 'For the public', 'lantern' ) ),
+                array( 'footer-2', 'members', __( 'For members',    'lantern' ) ),
+                array( 'footer-3', 'footer',  __( 'Links',          'lantern' ) ),
+            );
+            foreach ( $columns as $col ) :
+                list( $sidebar_id, $menu_location, $heading ) = $col;
+                $has_widgets = is_active_sidebar( $sidebar_id );
+                $has_menu    = has_nav_menu( $menu_location );
+                if ( ! $has_widgets && ! $has_menu ) {
+                    continue;
+                }
+                ?>
                 <div>
-                    <h4><?php esc_html_e( 'For the public', 'lantern' ); ?></h4>
-                    <?php wp_nav_menu( array(
-                        'theme_location' => 'public',
-                        'container'      => false,
-                        'menu_class'     => '',
-                        'depth'          => 1,
-                    ) ); ?>
+                    <h4><?php echo esc_html( $heading ); ?></h4>
+                    <?php if ( $has_widgets ) : ?>
+                        <?php dynamic_sidebar( $sidebar_id ); ?>
+                    <?php else : ?>
+                        <?php wp_nav_menu( array(
+                            'theme_location' => $menu_location,
+                            'container'      => false,
+                            'menu_class'     => '',
+                            'depth'          => 1,
+                        ) ); ?>
+                    <?php endif; ?>
                 </div>
-            <?php endif; ?>
-
-            <?php if ( has_nav_menu( 'members' ) ) : ?>
-                <div>
-                    <h4><?php esc_html_e( 'For members', 'lantern' ); ?></h4>
-                    <?php wp_nav_menu( array(
-                        'theme_location' => 'members',
-                        'container'      => false,
-                        'menu_class'     => '',
-                        'depth'          => 1,
-                    ) ); ?>
-                </div>
-            <?php endif; ?>
-
-            <?php if ( has_nav_menu( 'footer' ) ) : ?>
-                <div>
-                    <h4><?php esc_html_e( 'Links', 'lantern' ); ?></h4>
-                    <?php wp_nav_menu( array(
-                        'theme_location' => 'footer',
-                        'container'      => false,
-                        'menu_class'     => '',
-                        'depth'          => 1,
-                    ) ); ?>
-                </div>
-            <?php endif; ?>
+            <?php endforeach; ?>
 
         </div>
 

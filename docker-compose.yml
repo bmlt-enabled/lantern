@@ -13,7 +13,12 @@ services:
       WORDPRESS_DB_USER: wordpress
       WORDPRESS_DB_PASSWORD: wordpress
       WORDPRESS_DB_NAME: wordpress
-#      WORDPRESS_CONFIG_EXTRA: |
+      # Route PHP notices to /var/log/apache2/php-debug.log instead of stdout,
+      # so wp-cli output isn't drowned by third-party-plugin chatter.
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_DEBUG_DISPLAY', false);
+        define('WP_DEBUG_LOG', '/var/log/apache2/php-debug.log');
+        @ini_set('display_errors', '0');
 #        define('WP_HOME', 'https://localhost:7443');
 #        define('WP_SITEURL', 'https://localhost:7443');
     volumes:

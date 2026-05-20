@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-define( 'LANTERN_VERSION', '1.1.0' );
+define( 'LANTERN_VERSION', '1.0.0' );
 define( 'LANTERN_DIR', trailingslashit( get_template_directory() ) );
 define( 'LANTERN_URI', trailingslashit( get_template_directory_uri() ) );
 

@@ -1,17 +1,32 @@
 /*
 Theme Name: Lantern
-Theme URI: https://github.com/bmlt-enabled/bmlt-wp-theme
 Author: BMLT Enabled
 Author URI: https://bmlt.app
-Description: Lantern is an editorial-style WordPress theme for Narcotics Anonymous service bodies — regions, areas, and zonal forums. It pairs warm typography with restrained composition, and ships with first-class support for the BMLT plugin family (Crumb meeting finder, Mayo events, Bread PDF lists, Fetch Meditation, NACC cleantime calculator, and BMLT-Workflow). Drop in your service body details from Customize → Service Body, set your menus, and you have a calm, considered site that any region or area can make its own.
-Version: 1.1.0
+Description: Lantern is an editorial-style WordPress theme for non-profit community sites. It pairs a warm typographic system with first-class support for the BMLT plugin family. Configure your organisation details, helpline, and palette from Appearance → Customize.
+Version: 1.0.0
 Requires at least: 6.4
 Tested up to: 6.9
-Requires PHP: 8.1
+Requires PHP: 7.4
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: lantern
-Tags: nonprofit, community, narcotics-anonymous, na, bmlt, block-styles, custom-colors, custom-logo, custom-menu, editor-style, featured-images, full-width-template, threaded-comments, translation-ready, wide-blocks
+Tags: block-styles, custom-colors, custom-logo, custom-menu, editor-style, featured-images, footer-widgets, full-width-template, theme-options, threaded-comments, translation-ready, wide-blocks
+
+Lantern WordPress Theme, (C) 2026 BMLT Enabled
+Lantern is distributed under the terms of the GNU GPL v2 or later.
+
+------------------------------------------------------------
+Resources / Credits
+------------------------------------------------------------
+Fonts:
+  - Fraunces — SIL Open Font License v1.1 — https://fonts.google.com/specimen/Fraunces
+  - Instrument Sans — SIL Open Font License v1.1 — https://fonts.google.com/specimen/Instrument+Sans
+
+Screenshot:
+  Original composition by the theme author; all imagery is GPL-compatible.
+
+This theme bundles no third-party code other than the WordPress APIs it
+depends on. See readme.txt for plugin-integration details.
 */
 
 /* ============================================================
@@ -227,6 +242,69 @@ code, kbd, pre, samp { font-family: var(--lantern-mono); font-size: 0.9em; }
     z-index: 99;
 }
 .skip-link:focus { left: 1rem; top: 1rem; }
+
+/* ============================================================
+   WordPress core classes — required by Theme Check / WP markup.
+   Sticky posts, gallery captions, by-post-author highlights, and
+   screen-reader-only utility text all need a styled hook.
+   ============================================================ */
+
+.screen-reader-text {
+    border: 0;
+    clip: rect(1px, 1px, 1px, 1px);
+    clip-path: inset(50%);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute !important;
+    width: 1px;
+    word-wrap: normal !important;
+}
+.screen-reader-text:focus {
+    background-color: var(--lantern-paper);
+    clip: auto !important;
+    clip-path: none;
+    color: var(--lantern-ink);
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    height: auto;
+    left: 1rem;
+    line-height: 1.4;
+    padding: 0.75rem 1rem;
+    text-decoration: none;
+    top: 1rem;
+    width: auto;
+    z-index: 100000;
+}
+
+.sticky {
+    position: relative;
+    padding-left: 1rem;
+    border-left: 3px solid var(--lantern-ember);
+}
+
+.bypostauthor > .comment-body .fn::after {
+    content: " · " attr(data-author-label, "author");
+    color: var(--lantern-ember);
+    font-style: italic;
+    font-weight: 600;
+}
+
+.gallery-caption {
+    display: block;
+    font-family: var(--lantern-body);
+    font-size: var(--lantern-step--1);
+    color: var(--lantern-ink-soft);
+    margin-top: 0.5rem;
+    line-height: 1.45;
+}
+
+/* Alignment utility classes used by WP core / block editor. */
+.alignleft   { float: left;  margin: 0 1.5rem 1rem 0; max-width: 100%; }
+.alignright  { float: right; margin: 0 0 1rem 1.5rem; max-width: 100%; }
+.aligncenter { display: block; margin-left: auto; margin-right: auto; }
 
 /* ============================================================
    Header

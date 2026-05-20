@@ -43,6 +43,8 @@ Edit any file under `lantern/` and refresh — changes are live.
 | `make install`          | First-time WordPress install + theme/plugin activation + page scaffolding |
 | `make lint`             | `php -l` on every theme file                                              |
 | `make build`            | Produce `build/lantern.zip`                                               |
+| `make plugin-deps`      | `composer install` in any sibling plugin missing its vendor dir           |
+| `make theme-test-data`  | Import the [WPTT Theme Unit Test data](https://github.com/WPTT/theme-unit-test) (long titles, threaded comments, unicode, galleries, pagination) |
 | `make nuke`             | Wipe DB volume — start completely over                                    |
 
 ## Code standards

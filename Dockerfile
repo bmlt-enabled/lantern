@@ -1,10 +1,15 @@
 FROM wordpress:beta-7.0-php8.3-apache
 
 RUN apt-get update && \
-	apt-get install -y  --no-install-recommends ssl-cert && \
+	apt-get install -y  --no-install-recommends ssl-cert less && \
 	rm -r /var/lib/apt/lists/* && \
 	a2enmod ssl rewrite expires && \
 	a2ensite default-ssl
+
+# wp-cli — used by `make install` to scaffold the demo site.
+RUN curl -fsSL -o /usr/local/bin/wp \
+		https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
+	chmod +x /usr/local/bin/wp
 
 ENV PHP_INI_PATH="/usr/local/etc/php/php.ini"
 

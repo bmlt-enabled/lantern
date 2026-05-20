@@ -11,39 +11,12 @@ release workflow will take care of the rest.
 
 ## [Unreleased]
 
-## [1.1.0] - 2026-05-20
+## [1.0.0] - 2026-05-20
 
-### Added
-- **Page links** section in Customize. Every navigable link on the homepage,
-  For the Public, and For Members templates now has a `dropdown-pages` picker
-  so admins can route each card at any page instead of relying on slug
-  detection. Slots with no page assigned hide their card rather than linking
-  to a dead URL.
-- Live click-to-edit on the homepage in the Customizer preview: hero tagline,
-  hero lede, hero quote, about paragraphs, pillar quote, and closing CTA now
-  use `selective_refresh` partials with `postMessage` transport.
+Initial release.
 
-### Changed
-- Front-page pathway cards, side cards, and the For Public / For Members
-  card grids resolve URLs through the new `lantern_page_url()` helper, with
-  Customizer-pick taking priority over slug fallback. Empty destinations
-  hide their card.
-- The `make install` page-scaffolding loop now correctly detects existing
-  pages (the previous `wp post exists --field=ID --name=…` invocation was
-  invalid and silently failed, leaving many slugs uncreated). Demo install
-  also assigns each scaffolded page its matching page template and
-  pre-populates every `lantern_link_*` Customizer mod.
+### Theme
 
-### Removed
-- Standalone `lantern_meeting_finder_page` and `lantern_about_page`
-  Customizer settings — superseded by the unified Page links section. The
-  meeting-finder helper now reads `lantern_link_meeting_finder`; existing
-  demo installs are repopulated automatically by `make install`.
-
-## [1.0.0] - 2026-05-16
-
-### Added
-- Initial release of the Lantern theme.
 - Editorial design system: Fraunces display serif on warm parchment, terracotta
   ember and sage accents, fluid type scale, paper-grain overlay, sticky frosted
   header.
@@ -51,17 +24,45 @@ release workflow will take care of the rest.
   panel, upcoming events, dark about-NA band, journal cards, and closing CTA.
 - Page templates: Meeting Finder, Events, Cleantime Calculator, Daily
   Meditation, Helpline, For the Public, For Members, Wide.
-- Defensive integration with BMLT plugins — Crumb, Crouton, Mayo Events
-  Manager, Fetch Meditation, NACC, BMLT-Workflow, and Bread. Missing plugins
-  render a friendly notice instead of breaking.
+- `theme.json` exposing the full palette, font families, font sizes, and
+  custom page templates to the block editor; matching editor stylesheet.
+- WordPress core utility CSS — `.screen-reader-text`, `.sticky`,
+  `.bypostauthor`, `.gallery-caption`, `.alignleft` / `.alignright` /
+  `.aligncenter` — styled to match the theme.
+- Sidebar widget area (rendered via `sidebar.php`) plus three footer columns
+  that prefer their widget area when widgets are placed and fall back to
+  matching nav menus when not.
+
+### Customizer
+
+- Service Body identity, Helpline, BMLT server, Homepage copy, Footer, and a
+  four-color Palette override.
+- **Page links** section: every navigable link on the homepage, For the
+  Public, and For Members templates has a `dropdown-pages` picker so admins
+  can route each card at any page. Empty slots hide their card rather than
+  dead-linking.
+- Live click-to-edit homepage in the Customizer preview: hero tagline, hero
+  lede, hero quote, about paragraphs, pillar quote, and closing CTA all use
+  `selective_refresh` partials with `postMessage` transport.
+
+### BMLT plugin integration
+
+- Defensive integration with the BMLT plugin family — Crumb, Crouton, Mayo
+  Events Manager, Fetch Meditation, NACC, BMLT-Workflow, and Bread. Missing
+  plugins render a friendly notice instead of breaking.
 - Plugin CSS overrides rebind every embed to the Lantern palette: Crumb via
   its `#crumb-widget` host variables, Crouton via its `bmlt-*` class hooks,
   and similar for the other plugins.
-- Customizer panels for Service Body identity, Helpline, BMLT server + page
-  assignments, Homepage copy, Footer, and a four-color Palette override.
-- `theme.json` exposing the full palette, font families, font sizes, and
-  custom page templates to the block editor.
-- Editor stylesheet matching the front-end aesthetic.
-- Docker-based local development: `Dockerfile`, `docker-compose.yml`, and a
-  `Makefile` with `dev`, `install`, `build`, `lint`, `bash`, `wp`, `nuke`,
-  and friends.
+
+### Local development
+
+- Docker-based stack: `Dockerfile` (WordPress beta + PHP 8.3 + wp-cli +
+  xdebug), `docker-compose.yml`, and a `Makefile` with `dev`, `install`,
+  `plugin-deps`, `theme-test-data`, `build`, `lint`, `bash`, `wp`, `nuke`,
+  and friends. WordPress debug notices route to `logs/php-debug.log`.
+- `make install` scaffolds the demo site: installs WordPress, activates the
+  theme + any sibling BMLT plugins that have their composer deps in place,
+  creates the canonical pages, assigns each its matching page template, and
+  pre-populates every `lantern_link_*` Customizer mod.
+</content>
+</invoke>

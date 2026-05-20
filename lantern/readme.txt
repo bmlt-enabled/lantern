@@ -1,15 +1,15 @@
 === Lantern ===
 
 Contributors: bmltenabled
-Tags: nonprofit, community, narcotics-anonymous, na, bmlt, block-styles, custom-colors, custom-logo, custom-menu, editor-style, full-width-template, translation-ready
+Tags: block-styles, custom-colors, custom-logo, custom-menu, editor-style, featured-images, footer-widgets, full-width-template, theme-options, threaded-comments, translation-ready, wide-blocks
 Requires at least: 6.4
-Tested up to: 6.9
-Requires PHP: 8.1
-Stable tag: 1.1.0
+Tested up to: 7.0
+Requires PHP: 7.4
+Stable tag: 1.0.0
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Lantern is an editorial-style WordPress theme for Narcotics Anonymous service bodies. Drop in the BMLT plugins you already use and the site rebuilds itself around them.
+Lantern is an editorial-style WordPress theme for non-profit community sites. Configure your organisation, helpline, and palette from Appearance → Customize.
 
 == Description ==
 
@@ -94,3 +94,23 @@ See [CHANGELOG.md](https://github.com/bmlt-enabled/bmlt-wp-theme/blob/main/CHANG
 
 = 1.0.0 =
 * Initial release.
+
+== Copyright ==
+
+Lantern WordPress Theme, Copyright 2026 BMLT Enabled
+Lantern is distributed under the terms of the GNU GPL v2 or later.
+
+This theme bundles the following third-party resources, used in accordance
+with their respective licenses:
+
+* Fraunces font family, by Phaedra Charles, Flavia Zimbardi & Lasko Dzurovski.
+  License: SIL Open Font License v1.1 — http://scripts.sil.org/OFL
+  Source: https://fonts.google.com/specimen/Fraunces
+
+* Instrument Sans font family, by Instrument & Rodrigo Fuenzalida.
+  License: SIL Open Font License v1.1 — http://scripts.sil.org/OFL
+  Source: https://fonts.google.com/specimen/Instrument+Sans
+
+Both font families are loaded from the Google Fonts CDN, which is the only
+remote resource the theme uses. WordPress.org's theme directory permits
+Google Fonts as an explicit exception to the no-remote-resources rule.
