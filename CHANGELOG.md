@@ -11,6 +11,21 @@ release workflow will take care of the rest.
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-05-20
+
+### Added
+- Three block-style variations registered against core blocks: `core/quote`
+  → "Lantern pull-quote" (centered display serif framed by ember rules),
+  `core/separator` → "Lantern flourish" (three centered dots), and
+  `core/button` → "Lantern ember" (terracotta pill with hover lift).
+- "Find a meeting" block pattern + dedicated `lantern` pattern category so
+  the call-out is one click away in the block inserter.
+- `add_theme_support( 'custom-background' )` with the paper color as the
+  default — lets users tweak the page background from Customize.
+
+### Changed
+- `Tested up to:` bumped to WordPress 7.0 across `style.css` and `readme.txt`.
+
 ## [1.0.0] - 2026-05-20
 
 Initial release.

@@ -5,7 +5,7 @@ Tags: block-styles, custom-colors, custom-logo, custom-menu, editor-style, featu
 Requires at least: 6.4
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -91,6 +91,12 @@ Yes. All user-facing strings use the `lantern` text domain. Drop a `.mo` file in
 == Changelog ==
 
 See [CHANGELOG.md](https://github.com/bmlt-enabled/bmlt-wp-theme/blob/main/CHANGELOG.md) for the full version history.
+
+= 1.0.1 =
+* Added three block-style variations — Lantern pull-quote, Lantern flourish separator, Lantern ember button.
+* Added a "Find a meeting" block pattern and a Lantern pattern category.
+* Added custom-background theme support so users can override the paper color from Customize.
+* Updated Tested up to: 7.0.
 
 = 1.0.0 =
 * Initial release.

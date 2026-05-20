@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-define( 'LANTERN_VERSION', '1.0.0' );
+define( 'LANTERN_VERSION', '1.0.1' );
 define( 'LANTERN_DIR', trailingslashit( get_template_directory() ) );
 define( 'LANTERN_URI', trailingslashit( get_template_directory_uri() ) );
 
@@ -31,6 +31,10 @@ function lantern_setup() {
         'width'       => 96,
         'flex-height' => true,
         'flex-width'  => true,
+    ) );
+    add_theme_support( 'custom-background', array(
+        'default-color' => 'f7f1e6',
+        'default-image' => '',
     ) );
     add_theme_support( 'html5', array(
         'search-form', 'comment-form', 'comment-list',
@@ -315,3 +319,4 @@ function lantern_upcoming_events( $limit = 4 ) {
 require LANTERN_DIR . 'inc/customizer.php';
 require LANTERN_DIR . 'inc/template-tags.php';
 require LANTERN_DIR . 'inc/widgets.php';
+require LANTERN_DIR . 'inc/blocks.php';

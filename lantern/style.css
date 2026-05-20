@@ -3,9 +3,9 @@ Theme Name: Lantern
 Author: BMLT Enabled
 Author URI: https://bmlt.app
 Description: Lantern is an editorial-style WordPress theme for non-profit community sites. It pairs a warm typographic system with first-class support for the BMLT plugin family. Configure your organisation details, helpline, and palette from Appearance → Customize.
-Version: 1.0.0
+Version: 1.0.1
 Requires at least: 6.4
-Tested up to: 6.9
+Tested up to: 7.0
 Requires PHP: 7.4
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -1119,3 +1119,72 @@ code, kbd, pre, samp { font-family: var(--lantern-mono); font-size: 0.9em; }
 .lantern-post-card__title a { text-decoration: none; }
 .lantern-post-card__excerpt { color: var(--lantern-ink-soft); margin: 0 0 1rem; }
 @media (max-width: 640px) { .lantern-post-card { grid-template-columns: 1fr; } }
+
+/* ============================================================
+   Block style variations (registered in inc/blocks.php).
+   ============================================================ */
+
+/* Lantern pull-quote — large display serif, ember accent rule. */
+.wp-block-quote.is-style-lantern-pullquote {
+    border-left: none;
+    padding: 1.5rem 0;
+    margin: 2.5rem 0;
+    text-align: center;
+    font-family: var(--lantern-display);
+    font-size: var(--lantern-step-3);
+    line-height: 1.2;
+    color: var(--lantern-ink);
+    position: relative;
+}
+.wp-block-quote.is-style-lantern-pullquote::before,
+.wp-block-quote.is-style-lantern-pullquote::after {
+    content: "";
+    display: block;
+    width: 3rem;
+    height: 3px;
+    background: var(--lantern-ember);
+    margin: 1rem auto;
+}
+.wp-block-quote.is-style-lantern-pullquote cite {
+    display: block;
+    margin-top: 0.75rem;
+    font-family: var(--lantern-body);
+    font-size: var(--lantern-step--1);
+    font-style: normal;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--lantern-ink-soft);
+}
+
+/* Lantern flourish separator — three centred dots. */
+.wp-block-separator.is-style-lantern-flourish {
+    border: none;
+    background: none;
+    height: auto;
+    text-align: center;
+    color: var(--lantern-ember);
+    font-size: 1.5rem;
+    letter-spacing: 0.5em;
+    margin: 2.5rem auto;
+    max-width: 6rem;
+}
+.wp-block-separator.is-style-lantern-flourish::before {
+    content: "• • •";
+}
+
+/* Lantern ember button — primary CTA styling for blocks. */
+.wp-block-button.is-style-lantern-ember .wp-block-button__link {
+    background: var(--lantern-ember);
+    color: var(--lantern-paper);
+    border-radius: 999px;
+    padding: 0.85rem 1.6rem;
+    font-family: var(--lantern-body);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    box-shadow: 0 12px 28px -16px var(--lantern-ember);
+    transition: transform 120ms ease, box-shadow 120ms ease;
+}
+.wp-block-button.is-style-lantern-ember .wp-block-button__link:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 14px 32px -14px var(--lantern-ember);
+}
