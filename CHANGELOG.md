@@ -11,6 +11,35 @@ release workflow will take care of the rest.
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-05-20
+
+### Added
+- **Page links** section in Customize. Every navigable link on the homepage,
+  For the Public, and For Members templates now has a `dropdown-pages` picker
+  so admins can route each card at any page instead of relying on slug
+  detection. Slots with no page assigned hide their card rather than linking
+  to a dead URL.
+- Live click-to-edit on the homepage in the Customizer preview: hero tagline,
+  hero lede, hero quote, about paragraphs, pillar quote, and closing CTA now
+  use `selective_refresh` partials with `postMessage` transport.
+
+### Changed
+- Front-page pathway cards, side cards, and the For Public / For Members
+  card grids resolve URLs through the new `lantern_page_url()` helper, with
+  Customizer-pick taking priority over slug fallback. Empty destinations
+  hide their card.
+- The `make install` page-scaffolding loop now correctly detects existing
+  pages (the previous `wp post exists --field=ID --name=…` invocation was
+  invalid and silently failed, leaving many slugs uncreated). Demo install
+  also assigns each scaffolded page its matching page template and
+  pre-populates every `lantern_link_*` Customizer mod.
+
+### Removed
+- Standalone `lantern_meeting_finder_page` and `lantern_about_page`
+  Customizer settings — superseded by the unified Page links section. The
+  meeting-finder helper now reads `lantern_link_meeting_finder`; existing
+  demo installs are repopulated automatically by `make install`.
+
 ## [1.0.0] - 2026-05-16
 
 ### Added

@@ -70,16 +70,37 @@ install:  ## One-shot: install WordPress, activate the theme + BMLT plugins, cre
 			--admin_password=admin \
 			--admin_email=admin@example.test \
 			--skip-email; \
+		wp rewrite structure "/%postname%/" --hard >/dev/null; \
 		wp theme activate $(THEME_SLUG); \
 		for p in crumb mayo bread fetch-meditation nacc bmlt-workflow; do \
 			if [ -d wp-content/plugins/$$p ]; then wp plugin activate $$p || true; fi; \
 		done; \
-		for slug in meetings events cleantime daily-meditation helpline public members about newcomer; do \
-			wp post exists --post_type=page --field=ID --name=$$slug >/dev/null 2>&1 || \
-			wp post create --post_type=page --post_status=publish --post_title="$$(echo $$slug | tr "-" " " | sed -e "s/.*/\u&/")" --post_name=$$slug >/dev/null; \
+		for slug in home meetings events cleantime daily-meditation helpline public members about newcomer for-families professionals literature minutes subcommittees meeting-changes service-guides meeting-list; do \
+			id=$$(wp post list --post_type=page --name=$$slug --field=ID); \
+			if [ -z "$$id" ]; then \
+				title=$$(echo $$slug | tr "-" " " | awk "{for(i=1;i<=NF;i++) \$$i=toupper(substr(\$$i,1,1)) substr(\$$i,2)}1"); \
+				id=$$(wp post create --post_type=page --post_status=publish --post_title="$$title" --post_name=$$slug --porcelain); \
+			fi; \
+			case $$slug in \
+				meetings)         tpl="page-templates/meeting-finder.php" ;; \
+				events)           tpl="page-templates/events.php" ;; \
+				cleantime)        tpl="page-templates/cleantime.php" ;; \
+				daily-meditation) tpl="page-templates/meditation.php" ;; \
+				helpline)         tpl="page-templates/helpline.php" ;; \
+				public)           tpl="page-templates/for-public.php" ;; \
+				members)          tpl="page-templates/for-members.php" ;; \
+				*)                tpl="" ;; \
+			esac; \
+			if [ -n "$$tpl" ]; then wp post meta update $$id _wp_page_template $$tpl >/dev/null; fi; \
 		done; \
+		for slot in meeting_finder:meetings about:about newcomer:newcomer helpline:helpline cleantime:cleantime meditation:daily-meditation events:events public:public members:members families:for-families professionals:professionals literature:literature minutes:minutes subcommittees:subcommittees meeting_changes:meeting-changes service_guides:service-guides; do \
+			key=$${slot%%:*}; pslug=$${slot##*:}; \
+			pid=$$(wp post list --post_type=page --name=$$pslug --field=ID); \
+			if [ -n "$$pid" ]; then wp theme mod set lantern_link_$$key $$pid >/dev/null; fi; \
+		done; \
+		home_id=$$(wp post list --post_type=page --name=home --field=ID); \
 		wp option update show_on_front page; \
-		wp option update page_on_front $$(wp post list --post_type=page --name=home --field=ID 2>/dev/null || wp post create --post_type=page --post_status=publish --post_title=Home --post_name=home --porcelain); \
+		wp option update page_on_front $$home_id; \
 		echo "Done. Open http://localhost:8080  (admin / admin)"'
 
 .PHONY: open

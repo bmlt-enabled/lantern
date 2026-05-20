@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-define( 'LANTERN_VERSION', '1.0.0' );
+define( 'LANTERN_VERSION', '1.1.0' );
 define( 'LANTERN_DIR', trailingslashit( get_template_directory() ) );
 define( 'LANTERN_URI', trailingslashit( get_template_directory_uri() ) );
 
@@ -198,15 +198,68 @@ function lantern_bmlt_server() {
 }
 
 /**
- * Meeting-finder page URL (for buttons throughout the site).
+ * Map of link "slots" used in templates → Customizer setting key + slug fallbacks.
+ * Each slot is wired to a dropdown-pages Customizer control. Any template that
+ * needs to link somewhere should go through {@see lantern_page_url()} so the
+ * admin has a single place to point links at custom pages.
  */
-function lantern_meeting_finder_url() {
-    $page_id = (int) lantern_option( 'meeting_finder_page', 0 );
-    if ( $page_id > 0 ) {
+function lantern_link_slots() {
+    return array(
+        'meeting_finder' => array( 'label' => __( 'Meeting finder',     'lantern' ), 'slugs' => array( 'meetings', 'meeting-finder', 'find-a-meeting' ) ),
+        'about'          => array( 'label' => __( 'About NA',           'lantern' ), 'slugs' => array( 'about' ) ),
+        'newcomer'       => array( 'label' => __( 'Newcomer info',      'lantern' ), 'slugs' => array( 'newcomer' ) ),
+        'helpline'       => array( 'label' => __( 'Helpline',           'lantern' ), 'slugs' => array( 'helpline' ) ),
+        'cleantime'      => array( 'label' => __( 'Cleantime',          'lantern' ), 'slugs' => array( 'cleantime', 'clean-time' ) ),
+        'meditation'     => array( 'label' => __( 'Daily meditation',   'lantern' ), 'slugs' => array( 'daily-meditation', 'meditation' ) ),
+        'events'         => array( 'label' => __( 'Events',             'lantern' ), 'slugs' => array( 'events' ) ),
+        'public'         => array( 'label' => __( 'For the public',     'lantern' ), 'slugs' => array( 'public', 'for-the-public' ) ),
+        'members'        => array( 'label' => __( 'For members',        'lantern' ), 'slugs' => array( 'members', 'for-members' ) ),
+        'families'       => array( 'label' => __( 'For families',       'lantern' ), 'slugs' => array( 'for-families', 'families' ) ),
+        'professionals'  => array( 'label' => __( 'For professionals',  'lantern' ), 'slugs' => array( 'professionals' ) ),
+        'literature'     => array( 'label' => __( 'Literature',         'lantern' ), 'slugs' => array( 'literature' ) ),
+        'minutes'        => array( 'label' => __( 'Minutes & reports',  'lantern' ), 'slugs' => array( 'minutes' ) ),
+        'subcommittees'  => array( 'label' => __( 'Subcommittees',      'lantern' ), 'slugs' => array( 'subcommittees' ) ),
+        'meeting_changes'=> array( 'label' => __( 'Meeting changes',    'lantern' ), 'slugs' => array( 'meeting-changes' ) ),
+        'service_guides' => array( 'label' => __( 'Service guides',     'lantern' ), 'slugs' => array( 'service-guides' ) ),
+        'meeting_list'   => array( 'label' => __( 'Printable list',     'lantern' ), 'slugs' => array( 'meeting-list' ) ),
+    );
+}
+
+/**
+ * Resolve a navigable slot to a URL.
+ *
+ * Priority:
+ *   1. Customizer page picker `lantern_link_{slot}` (an int page ID).
+ *   2. First matching `get_page_by_path()` against the slot's fallback slugs.
+ *   3. Empty string — caller decides whether to render the link.
+ */
+function lantern_page_url( $slot ) {
+    $slots = lantern_link_slots();
+    if ( ! isset( $slots[ $slot ] ) ) {
+        return '';
+    }
+
+    $page_id = (int) get_theme_mod( 'lantern_link_' . $slot, 0 );
+    if ( $page_id > 0 && get_post_status( $page_id ) === 'publish' ) {
         return get_permalink( $page_id );
     }
-    $page = get_page_by_path( 'meetings' ) ?: get_page_by_path( 'meeting-finder' ) ?: get_page_by_path( 'find-a-meeting' );
-    return $page ? get_permalink( $page ) : home_url( '/' );
+
+    foreach ( $slots[ $slot ]['slugs'] as $slug ) {
+        $page = get_page_by_path( $slug );
+        if ( $page && $page->post_status === 'publish' ) {
+            return get_permalink( $page );
+        }
+    }
+    return '';
+}
+
+/**
+ * Meeting-finder page URL (for buttons throughout the site).
+ * Falls back to home_url so the "Find a meeting" CTA is never empty.
+ */
+function lantern_meeting_finder_url() {
+    $url = lantern_page_url( 'meeting_finder' );
+    return $url ?: home_url( '/' );
 }
 
 /**

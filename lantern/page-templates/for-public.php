@@ -30,28 +30,30 @@ get_header(); ?>
                 'eyebrow' => __( 'I think I might be an addict', 'lantern' ),
                 'title'   => __( 'For the newcomer', 'lantern' ),
                 'desc'    => __( 'What NA is, what to expect at your first meeting, and how to find one tonight.', 'lantern' ),
-                'url'     => get_permalink( get_page_by_path( 'newcomer' ) ) ?: '#',
+                'url'     => lantern_page_url( 'newcomer' ),
             ),
             array(
                 'eyebrow' => __( 'I\'m worried about someone', 'lantern' ),
                 'title'   => __( 'For families', 'lantern' ),
                 'desc'    => __( 'How NA can — and can\'t — help, and where loved ones can find their own support.', 'lantern' ),
-                'url'     => get_permalink( get_page_by_path( 'for-families' ) ) ?: '#',
+                'url'     => lantern_page_url( 'families' ),
             ),
             array(
                 'eyebrow' => __( 'I work with addicts', 'lantern' ),
                 'title'   => __( 'For professionals', 'lantern' ),
                 'desc'    => __( 'Brochures, presentations, and contact info for treatment centers, hospitals, courts, and clergy.', 'lantern' ),
-                'url'     => get_permalink( get_page_by_path( 'professionals' ) ) ?: '#',
+                'url'     => lantern_page_url( 'professionals' ),
             ),
             array(
                 'eyebrow' => __( 'I want to read', 'lantern' ),
                 'title'   => __( 'Literature', 'lantern' ),
                 'desc'    => __( 'Information pamphlets, the Basic Text, and other approved NA literature.', 'lantern' ),
-                'url'     => get_permalink( get_page_by_path( 'literature' ) ) ?: '#',
+                'url'     => lantern_page_url( 'literature' ),
             ),
         );
+        $cards = array_values( array_filter( $cards, fn( $c ) => ! empty( $c['url'] ) ) );
         ?>
+        <?php if ( $cards ) : ?>
         <div class="lantern-pathways">
             <?php foreach ( $cards as $c ) : ?>
                 <a class="lantern-pathway" href="<?php echo esc_url( $c['url'] ); ?>">
@@ -62,6 +64,11 @@ get_header(); ?>
                 </a>
             <?php endforeach; ?>
         </div>
+        <?php else : ?>
+            <p class="lantern-notice">
+                <?php esc_html_e( 'No public-resource pages are linked yet. Go to Customize → Page links to point Newcomer / Families / Professionals / Literature at real pages.', 'lantern' ); ?>
+            </p>
+        <?php endif; ?>
     </div>
 </section>
 

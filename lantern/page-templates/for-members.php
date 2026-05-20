@@ -26,24 +26,31 @@ get_header(); ?>
 
         <?php
         $cards = array(
-            array( __( 'Minutes & reports', 'lantern' ),       __( 'Recent area & regional minutes, treasurer reports.', 'lantern' ),   get_permalink( get_page_by_path( 'minutes' ) ) ?: '#' ),
-            array( __( 'Subcommittees', 'lantern' ),           __( 'PR, H&I, Activities, Literature, Outreach, and more.', 'lantern' ), get_permalink( get_page_by_path( 'subcommittees' ) ) ?: '#' ),
-            array( __( 'Events & calendar', 'lantern' ),       __( 'Submit an event, see the trusted-servant calendar.', 'lantern' ),   get_permalink( get_page_by_path( 'events' ) ) ?: '#' ),
-            array( __( 'Meeting changes', 'lantern' ),         __( 'Add, change, or close a meeting via the BMLT workflow.', 'lantern' ), get_permalink( get_page_by_path( 'meeting-changes' ) ) ?: '#' ),
-            array( __( 'Service guides', 'lantern' ),          __( 'Local & world service handbooks, by-laws, motions.', 'lantern' ),   get_permalink( get_page_by_path( 'service-guides' ) ) ?: '#' ),
-            array( __( 'Printable meeting list', 'lantern' ),  __( 'PDF schedule, freshly generated from BMLT.', 'lantern' ),           get_permalink( get_page_by_path( 'meeting-list' ) ) ?: '#' ),
+            array( __( 'Minutes & reports', 'lantern' ),      __( 'Recent area & regional minutes, treasurer reports.', 'lantern' ),    lantern_page_url( 'minutes' ) ),
+            array( __( 'Subcommittees', 'lantern' ),          __( 'PR, H&I, Activities, Literature, Outreach, and more.', 'lantern' ),  lantern_page_url( 'subcommittees' ) ),
+            array( __( 'Events & calendar', 'lantern' ),      __( 'Submit an event, see the trusted-servant calendar.', 'lantern' ),    lantern_page_url( 'events' ) ),
+            array( __( 'Meeting changes', 'lantern' ),        __( 'Add, change, or close a meeting via the BMLT workflow.', 'lantern'), lantern_page_url( 'meeting_changes' ) ),
+            array( __( 'Service guides', 'lantern' ),         __( 'Local & world service handbooks, by-laws, motions.', 'lantern' ),    lantern_page_url( 'service_guides' ) ),
+            array( __( 'Printable meeting list', 'lantern' ), __( 'PDF schedule, freshly generated from BMLT.', 'lantern' ),             lantern_page_url( 'meeting_list' ) ),
         );
+        $cards = array_values( array_filter( $cards, fn( $c ) => ! empty( $c[2] ) ) );
         ?>
+        <?php if ( $cards ) : ?>
         <div class="lantern-pathways">
             <?php $i = 1; foreach ( $cards as $c ) : ?>
                 <a class="lantern-pathway" href="<?php echo esc_url( $c[2] ); ?>">
-                    <span class="lantern-pathway__num"><?php printf( '0%d', $i++ ); ?></span>
+                    <span class="lantern-pathway__num"><?php printf( '%02d', $i++ ); ?></span>
                     <h3 class="lantern-pathway__title"><?php echo esc_html( $c[0] ); ?></h3>
                     <p class="lantern-pathway__desc"><?php echo esc_html( $c[1] ); ?></p>
                     <span class="lantern-pathway__more"><?php esc_html_e( 'Open', 'lantern' ); ?></span>
                 </a>
             <?php endforeach; ?>
         </div>
+        <?php else : ?>
+            <p class="lantern-notice">
+                <?php esc_html_e( 'No member-area pages are linked yet. Go to Customize → Page links to point Minutes / Subcommittees / Events / Meeting changes / Service guides / Printable list at real pages.', 'lantern' ); ?>
+            </p>
+        <?php endif; ?>
 
         <?php if ( lantern_has_shortcode( 'bmltwf-meeting-update-form' ) ) : ?>
             <hr class="lantern-rule">

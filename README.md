@@ -54,8 +54,9 @@ All branding lives in **Appearance → Customize**:
 
 - **Service Body** — name, tagline, founded year, weekly meeting count, area count
 - **Helpline** — phone number + supporting copy (shown in header, footer, homepage strip)
-- **BMLT & plugins** — root server URL + page assignments
-- **Homepage copy** — every line of homepage text is editable
+- **Page links** — point each themed slot (Newcomer, Members, Cleantime, Meditation, Events, Helpline, For the Public, Families, Professionals, Literature, Minutes, Subcommittees, Meeting changes, Service guides, Printable list, Meeting finder, About) at any page. Slots with no page hide their card instead of dead-linking.
+- **BMLT & plugins** — root server URL
+- **Homepage copy** — every line of homepage text is editable. Click directly on the text in the Customizer preview to jump to its setting.
 - **Footer** — about blurb, disclaimer, motto / tradition line
 - **Palette** — override Paper, Ink, Ember, or Sage to recolor the entire theme
 
