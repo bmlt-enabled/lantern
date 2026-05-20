@@ -14,8 +14,6 @@ $tagline       = lantern_option( 'home_tagline', __( 'You never have to <em>use<
 $lede          = lantern_option( 'home_lede', __( 'A community of recovering addicts in service to each other. Find a meeting, read today\'s meditation, or reach the helpline.', 'lantern' ) );
 $year_founded  = lantern_option( 'year_founded', '1953' );
 $founded_label = sprintf( __( 'Serving since %s', 'lantern' ), $year_founded );
-$weekly_count  = lantern_option( 'weekly_meeting_count', '' );
-$area_count    = lantern_option( 'area_count', '' );
 $meeting_url   = lantern_meeting_finder_url();
 ?>
 
@@ -53,28 +51,8 @@ $meeting_url   = lantern_meeting_finder_url();
                 </div>
             </div>
 
-            <aside class="lantern-hero__aside lantern-reveal">
-                <h3><?php esc_html_e( 'At a glance', 'lantern' ); ?></h3>
-                <dl>
-                    <?php if ( $weekly_count ) : ?>
-                        <dt><?php esc_html_e( 'Weekly meetings', 'lantern' ); ?></dt>
-                        <dd><?php echo esc_html( $weekly_count ); ?></dd>
-                    <?php endif; ?>
-
-                    <?php if ( $area_count ) : ?>
-                        <dt><?php esc_html_e( 'Areas served', 'lantern' ); ?></dt>
-                        <dd><?php echo esc_html( $area_count ); ?></dd>
-                    <?php endif; ?>
-
-                    <dt><?php esc_html_e( 'Cost to attend', 'lantern' ); ?></dt>
-                    <dd><?php esc_html_e( 'Free, always', 'lantern' ); ?></dd>
-
-                    <dt><?php esc_html_e( 'Requirement', 'lantern' ); ?></dt>
-                    <dd><?php esc_html_e( 'A desire to stop using', 'lantern' ); ?></dd>
-                </dl>
-
-                <hr class="lantern-rule" style="margin: 1.5rem 0 1rem;">
-                <p class="lantern-edit-hero-quote" style="margin:0; font-family: var(--lantern-display); font-size: var(--lantern-step-1); line-height: 1.25; color: var(--lantern-ink-soft); font-style: italic;">
+            <aside class="lantern-hero__aside lantern-hero__aside--quote lantern-reveal">
+                <p class="lantern-edit-hero-quote" style="margin:0; font-family: var(--lantern-display); font-size: var(--lantern-step-4); line-height: 1.2; color: var(--lantern-ink-soft); font-style: italic;">
                     <?php echo esc_html( lantern_option( 'hero_quote', __( '“We do recover.”', 'lantern' ) ) ); ?>
                 </p>
             </aside>
@@ -83,15 +61,30 @@ $meeting_url   = lantern_meeting_finder_url();
 </section>
 
 <!-- ===================== HELPLINE ===================== -->
-<?php $helpline = lantern_helpline_number(); if ( $helpline ) : ?>
+<?php
+$helpline = lantern_helpline_number();
+$email    = lantern_contact_email();
+if ( $helpline || $email ) : ?>
 <section class="lantern-helpline" aria-labelledby="helpline-label">
     <div class="lantern-shell lantern-shell--wide lantern-helpline__row">
+        <?php if ( $helpline ) : ?>
         <div>
             <span class="lantern-helpline__label" id="helpline-label"><?php esc_html_e( '24-Hour Helpline', 'lantern' ); ?></span><br>
             <a class="lantern-helpline__number" href="tel:<?php echo esc_attr( lantern_helpline_tel() ); ?>">
                 <?php echo esc_html( $helpline ); ?>
             </a>
         </div>
+        <?php endif; ?>
+
+        <?php if ( $email ) : ?>
+        <div>
+            <span class="lantern-helpline__label"><?php esc_html_e( 'Email us:', 'lantern' ); ?></span><br>
+            <a class="lantern-helpline__number" href="mailto:<?php echo esc_attr( $email ); ?>">
+                <?php echo esc_html( $email ); ?>
+            </a>
+        </div>
+        <?php endif; ?>
+
         <p class="lantern-helpline__copy">
             <?php echo esc_html( lantern_option(
                 'helpline_copy',
@@ -106,29 +99,32 @@ $meeting_url   = lantern_meeting_finder_url();
 <section class="lantern-section">
     <div class="lantern-shell lantern-shell--wide">
         <header class="lantern-stack" style="margin-bottom: 2.5rem; max-width: 60ch;">
-            <span class="lantern-eyebrow"><?php esc_html_e( 'Where to start', 'lantern' ); ?></span>
-            <h2 style="font-size: var(--lantern-step-4); margin:0;"><?php esc_html_e( 'Three doors, one fellowship.', 'lantern' ); ?></h2>
+            <span class="lantern-eyebrow lantern-edit-pathways-eyebrow"><?php echo esc_html( lantern_option( 'pathways_eyebrow', __( 'Where to start', 'lantern' ) ) ); ?></span>
+            <h2 class="lantern-edit-pathways-title" style="font-size: var(--lantern-step-4); margin:0;"><?php echo esc_html( lantern_option( 'pathways_title', __( 'Three ways to take part.', 'lantern' ) ) ); ?></h2>
         </header>
 
         <?php
         $pathways = array(
             array(
-                'title' => __( 'I need help', 'lantern' ),
-                'desc'  => __( 'New, returning, or someone you love is struggling. Start with a meeting, the helpline, or a few words on what NA actually is.', 'lantern' ),
+                'slot'  => 'help',
+                'title' => lantern_option( 'pathway_help_title', __( 'I need help', 'lantern' ) ),
+                'desc'  => lantern_option( 'pathway_help_desc',  __( 'New, returning, or someone you love is struggling. Start with a meeting, the helpline, or a few words on what NA actually is.', 'lantern' ) ),
                 'url'   => lantern_page_url( 'newcomer' ) ?: $meeting_url,
-                'cta'   => __( 'Newcomer info', 'lantern' ),
+                'cta'   => lantern_option( 'pathway_help_cta',   __( 'Newcomer info', 'lantern' ) ),
             ),
             array(
-                'title' => __( 'Find a meeting', 'lantern' ),
-                'desc'  => __( 'Search by city, day, time, or format. In-person, hybrid, and online meetings happen every day of the week.', 'lantern' ),
+                'slot'  => 'meeting',
+                'title' => lantern_option( 'pathway_meeting_title', __( 'Find a meeting', 'lantern' ) ),
+                'desc'  => lantern_option( 'pathway_meeting_desc',  __( 'Search by city, day, time, or format. In-person and online meetings happen every day of the week.', 'lantern' ) ),
                 'url'   => $meeting_url,
-                'cta'   => __( 'Open the finder', 'lantern' ),
+                'cta'   => lantern_option( 'pathway_meeting_cta',   __( 'Open the finder', 'lantern' ) ),
             ),
             array(
-                'title' => __( 'I serve', 'lantern' ),
-                'desc'  => __( 'Subcommittee minutes, event submissions, literature orders, and the trusted-servant calendar live behind the Members door.', 'lantern' ),
+                'slot'  => 'serve',
+                'title' => lantern_option( 'pathway_serve_title', __( 'I serve', 'lantern' ) ),
+                'desc'  => lantern_option( 'pathway_serve_desc',  __( 'Subcommittee minutes, event submissions, literature orders, and the trusted-servant calendar live behind the Members door.', 'lantern' ) ),
                 'url'   => lantern_page_url( 'members' ),
-                'cta'   => __( 'For members', 'lantern' ),
+                'cta'   => lantern_option( 'pathway_serve_cta',   __( 'For members', 'lantern' ) ),
             ),
         );
         $pathways = array_values( array_filter( $pathways, fn( $p ) => ! empty( $p['url'] ) ) );
@@ -138,17 +134,18 @@ $meeting_url   = lantern_meeting_finder_url();
             $i = 1;
             foreach ( $pathways as $p ) {
                 printf(
-                    '<a class="lantern-pathway lantern-reveal" href="%s">
-                        <span class="lantern-pathway__num">%s</span>
-                        <h3 class="lantern-pathway__title">%s</h3>
-                        <p class="lantern-pathway__desc">%s</p>
-                        <span class="lantern-pathway__more">%s</span>
+                    '<a class="lantern-pathway lantern-reveal" href="%6$s">
+                        <span class="lantern-pathway__num">%2$s</span>
+                        <h3 class="lantern-pathway__title lantern-edit-pathway-%1$s-title">%3$s</h3>
+                        <p class="lantern-pathway__desc lantern-edit-pathway-%1$s-desc">%4$s</p>
+                        <span class="lantern-pathway__more lantern-edit-pathway-%1$s-cta">%5$s</span>
                     </a>',
-                    esc_url( $p['url'] ),
+                    esc_attr( $p['slot'] ),
                     esc_html( sprintf( '%02d', $i++ ) ),
                     esc_html( $p['title'] ),
                     esc_html( $p['desc'] ),
-                    esc_html( $p['cta'] )
+                    esc_html( $p['cta'] ),
+                    esc_url( $p['url'] )
                 );
             }
             echo '</div>';
@@ -202,8 +199,8 @@ $meeting_url   = lantern_meeting_finder_url();
                 <?php $cleantime_url = lantern_page_url( 'cleantime' ); if ( $cleantime_url ) : ?>
                 <a class="lantern-side-card lantern-reveal" href="<?php echo esc_url( $cleantime_url ); ?>">
                     <span>
-                        <span class="lantern-side-card__label"><?php esc_html_e( 'Cleantime', 'lantern' ); ?></span>
-                        <span class="lantern-side-card__value"><?php esc_html_e( 'How long have you been clean?', 'lantern' ); ?></span>
+                        <span class="lantern-side-card__label lantern-edit-side-cleantime-label"><?php echo esc_html( lantern_option( 'side_cleantime_label', __( 'Cleantime', 'lantern' ) ) ); ?></span>
+                        <span class="lantern-side-card__value lantern-edit-side-cleantime-value"><?php echo esc_html( lantern_option( 'side_cleantime_value', __( 'How long have you been clean?', 'lantern' ) ) ); ?></span>
                     </span>
                     <span class="lantern-side-card__arrow" aria-hidden="true">→</span>
                 </a>
@@ -211,8 +208,8 @@ $meeting_url   = lantern_meeting_finder_url();
 
                 <a class="lantern-side-card lantern-reveal" href="<?php echo esc_url( $meeting_url ); ?>">
                     <span>
-                        <span class="lantern-side-card__label"><?php esc_html_e( 'Meeting finder', 'lantern' ); ?></span>
-                        <span class="lantern-side-card__value"><?php esc_html_e( 'In-person · Online · Hybrid', 'lantern' ); ?></span>
+                        <span class="lantern-side-card__label lantern-edit-side-meetings-label"><?php echo esc_html( lantern_option( 'side_meetings_label', __( 'Meeting finder', 'lantern' ) ) ); ?></span>
+                        <span class="lantern-side-card__value lantern-edit-side-meetings-value"><?php echo esc_html( lantern_option( 'side_meetings_value', __( 'In-person · Online', 'lantern' ) ) ); ?></span>
                     </span>
                     <span class="lantern-side-card__arrow" aria-hidden="true">→</span>
                 </a>
@@ -220,8 +217,8 @@ $meeting_url   = lantern_meeting_finder_url();
                 <?php $events_url = lantern_page_url( 'events' ); if ( $events_url ) : ?>
                 <a class="lantern-side-card lantern-reveal" href="<?php echo esc_url( $events_url ); ?>">
                     <span>
-                        <span class="lantern-side-card__label"><?php esc_html_e( 'Events', 'lantern' ); ?></span>
-                        <span class="lantern-side-card__value"><?php esc_html_e( 'Conventions, workshops, dances', 'lantern' ); ?></span>
+                        <span class="lantern-side-card__label lantern-edit-side-events-label"><?php echo esc_html( lantern_option( 'side_events_label', __( 'Events', 'lantern' ) ) ); ?></span>
+                        <span class="lantern-side-card__value lantern-edit-side-events-value"><?php echo esc_html( lantern_option( 'side_events_value', __( 'Conventions, workshops', 'lantern' ) ) ); ?></span>
                     </span>
                     <span class="lantern-side-card__arrow" aria-hidden="true">→</span>
                 </a>
@@ -322,12 +319,12 @@ if ( ! empty( $events ) || $mayo_available ) : ?>
 
                 <div class="lantern-grid-2" style="gap: 1.5rem;">
                     <div>
-                        <p style="font-family: var(--lantern-display); font-size: var(--lantern-step-3); color: var(--lantern-paper); margin: 0;">76,000+</p>
-                        <p style="font-size: var(--lantern-step--1); color: var(--lantern-sand); margin: 0;"><?php esc_html_e( 'weekly meetings worldwide', 'lantern' ); ?></p>
+                        <p class="lantern-edit-stat-meetings-value" style="font-family: var(--lantern-display); font-size: var(--lantern-step-3); color: var(--lantern-paper); margin: 0;"><?php echo esc_html( lantern_option( 'stat_meetings_value', __( '79,000+', 'lantern' ) ) ); ?></p>
+                        <p class="lantern-edit-stat-meetings-label" style="font-size: var(--lantern-step--1); color: var(--lantern-sand); margin: 0;"><?php echo esc_html( lantern_option( 'stat_meetings_label', __( 'weekly meetings worldwide', 'lantern' ) ) ); ?></p>
                     </div>
                     <div>
-                        <p style="font-family: var(--lantern-display); font-size: var(--lantern-step-3); color: var(--lantern-paper); margin: 0;">143</p>
-                        <p style="font-size: var(--lantern-step--1); color: var(--lantern-sand); margin: 0;"><?php esc_html_e( 'countries reached', 'lantern' ); ?></p>
+                        <p class="lantern-edit-stat-countries-value" style="font-family: var(--lantern-display); font-size: var(--lantern-step-3); color: var(--lantern-paper); margin: 0;"><?php echo esc_html( lantern_option( 'stat_countries_value', __( '143', 'lantern' ) ) ); ?></p>
+                        <p class="lantern-edit-stat-countries-label" style="font-size: var(--lantern-step--1); color: var(--lantern-sand); margin: 0;"><?php echo esc_html( lantern_option( 'stat_countries_label', __( 'countries reached', 'lantern' ) ) ); ?></p>
                     </div>
                 </div>
             </div>
@@ -373,6 +370,26 @@ if ( $latest->have_posts() ) : ?>
                 </article>
             <?php endwhile; wp_reset_postdata(); ?>
         </div>
+    </div>
+</section>
+<?php endif; ?>
+
+<!-- ===================== ABOUT THIS SERVICE BODY (optional) ===================== -->
+<?php
+$custom_title = lantern_option( 'custom_section_title', '' );
+$custom_body  = lantern_option( 'custom_section_body', '' );
+if ( $custom_title || $custom_body ) : ?>
+<section class="lantern-section lantern-custom-section">
+    <div class="lantern-shell lantern-shell--narrow">
+        <span class="lantern-eyebrow"><?php esc_html_e( 'About us', 'lantern' ); ?></span>
+        <?php if ( $custom_title ) : ?>
+            <h2 style="font-size: var(--lantern-step-4); margin: 0 0 1.5rem;"><?php echo esc_html( $custom_title ); ?></h2>
+        <?php endif; ?>
+        <?php if ( $custom_body ) : ?>
+            <div class="lantern-custom-section__body" style="font-size: var(--lantern-step-0); color: var(--lantern-ink-soft);">
+                <?php echo wp_kses_post( wpautop( $custom_body ) ); ?>
+            </div>
+        <?php endif; ?>
     </div>
 </section>
 <?php endif; ?>

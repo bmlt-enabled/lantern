@@ -11,6 +11,50 @@ release workflow will take care of the rest.
 
 ## [Unreleased]
 
+## [1.0.2] - 2026-05-20
+
+### Added
+- The four worldwide-stats values on the about band (weekly-meetings value
+  and label, countries value and label) are now Customizer-backed with
+  click-to-edit pencils via `selective_refresh` partials.
+- The three "Today" side cards (Cleantime, Meeting finder, Events) — six
+  strings, label + value per card — are now Customizer-backed with their
+  own pencils.
+- The pathways section (eyebrow, heading, and all three cards' title /
+  description / link label) is now Customizer-backed — 11 new fields, each
+  with its own selective-refresh pencil.
+- Optional "About us" block on the homepage (heading + rich-body, basic
+  HTML allowed) that renders between the journal and the closing CTA.
+  Hidden when both fields are blank — fully opt-in for service bodies
+  who want to introduce themselves.
+- `Contact email` field in the Helpline section (`lantern_contact_email()`
+  helper), rendered in the footer and the homepage helpline strip with an
+  "Email us:" label. The homepage strip now shows whenever the helpline
+  OR the email is set.
+
+### Changed
+- Hero aside redesigned: removed the "At a glance" stats card (cost,
+  requirement, weekly/area counts) — it read like a product comparison and
+  was off-tone for an NA fellowship site. The aside is now a single larger
+  pull-quote, vertically centered in the card.
+- Customizer text controls in the Homepage, Helpline, and Footer sections
+  now open pre-populated with their default copy instead of blank inputs,
+  so admins can see what they're editing. Backed by a new
+  `lantern_home_field_defaults()` helper as the single source of truth.
+- Pathways section default heading: "Three doors, one fellowship." →
+  "Three ways to take part." (clearer, less jargon).
+- "Weekly meetings worldwide" figure on the about band: 76,000+ → 79,000+.
+- Dropped "hybrid" from the four places it appeared (Meeting finder side
+  card, pathways description, "Find a meeting" block pattern, Meeting
+  Finder page subtitle) — meeting seekers filter by in-person vs. online,
+  not by hybrid.
+- Dropped "dances" from the Events side-card descriptor; now reads
+  "Conventions, workshops".
+
+### Removed
+- `weekly_meeting_count` and `area_count` Service Body Customizer fields
+  (only consumed by the retired aside stats card).
+
 ## [1.0.1] - 2026-05-20
 
 ### Added

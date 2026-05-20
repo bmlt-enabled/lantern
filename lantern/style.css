@@ -3,7 +3,7 @@ Theme Name: Lantern
 Author: BMLT Enabled
 Author URI: https://bmlt.app
 Description: Lantern is an editorial-style WordPress theme for non-profit community sites. It pairs a warm typographic system with first-class support for the BMLT plugin family. Configure your organisation details, helpline, and palette from Appearance → Customize.
-Version: 1.0.1
+Version: 1.0.2
 Requires at least: 6.4
 Tested up to: 7.0
 Requires PHP: 7.4
@@ -611,6 +611,12 @@ code, kbd, pre, samp { font-family: var(--lantern-mono); font-size: 0.9em; }
     text-align: right;
     font-weight: 600;
     font-variant-numeric: tabular-nums;
+}
+.lantern-hero__aside--quote {
+    display: flex;
+    align-items: center;
+    min-height: 14rem;
+    padding: clamp(1.75rem, 3vw, 2.75rem);
 }
 
 /* The wordmark big numbers / lockup */

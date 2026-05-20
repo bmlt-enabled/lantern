@@ -5,7 +5,7 @@ Tags: block-styles, custom-colors, custom-logo, custom-menu, editor-style, featu
 Requires at least: 6.4
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -91,6 +91,16 @@ Yes. All user-facing strings use the `lantern` text domain. Drop a `.mo` file in
 == Changelog ==
 
 See [CHANGELOG.md](https://github.com/bmlt-enabled/bmlt-wp-theme/blob/main/CHANGELOG.md) for the full version history.
+
+= 1.0.2 =
+* Replaced the "At a glance" hero aside (cost/requirement stats card) with a single larger pull-quote.
+* Customizer Homepage, Helpline, and Footer text controls now open pre-populated with their default copy instead of empty inputs.
+* Worldwide-stats values on the about band, the three "Today" side cards, and the full pathways section (eyebrow + heading + all three cards' title/description/link label) are all Customizer-backed with click-to-edit pencils.
+* New optional "About us" block on the homepage (heading + body, basic HTML allowed) — hidden until you fill it in.
+* New "Contact email" field in the Helpline section, rendered in the footer and homepage strip with an "Email us:" label.
+* Pathways default heading changed from "Three doors, one fellowship." to "Three ways to take part." and the worldwide weekly-meetings figure updated from 76,000+ to 79,000+.
+* Copy cleanup: dropped "hybrid" from four places (people search in-person vs. online) and dropped "dances" from the Events side-card descriptor.
+* Removed the unused `weekly_meeting_count` and `area_count` Service Body fields.
 
 = 1.0.1 =
 * Added three block-style variations — Lantern pull-quote, Lantern flourish separator, Lantern ember button.

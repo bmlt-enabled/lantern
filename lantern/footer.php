@@ -35,6 +35,17 @@
                         </a>
                     </p>
                 <?php endif; ?>
+
+                <?php
+                $contact_email = lantern_contact_email();
+                if ( $contact_email ) : ?>
+                    <p>
+                        <strong style="color: var(--lantern-sand); display:block; font-family: var(--lantern-body); font-size: 0.78rem; letter-spacing:0.22em; text-transform:uppercase;"><?php esc_html_e( 'Email us:', 'lantern' ); ?></strong>
+                        <a href="mailto:<?php echo esc_attr( $contact_email ); ?>" style="font-family: var(--lantern-display); font-size: 1.25rem; letter-spacing: -0.01em; color: var(--lantern-paper); text-decoration: none; word-break: break-word;">
+                            <?php echo esc_html( $contact_email ); ?>
+                        </a>
+                    </p>
+                <?php endif; ?>
             </div>
 
             <?php

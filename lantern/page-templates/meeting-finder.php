@@ -23,7 +23,7 @@ get_header(); ?>
                     <div class="lantern-page-subtitle"><?php the_content(); ?></div>
                 <?php else : ?>
                     <p class="lantern-page-subtitle">
-                        <?php esc_html_e( 'Search by city, day, time, or format. In-person, hybrid, and online meetings happen every day of the week.', 'lantern' ); ?>
+                        <?php esc_html_e( 'Search by city, day, time, or format. In-person and online meetings happen every day of the week.', 'lantern' ); ?>
                     </p>
                 <?php endif; ?>
             <?php endwhile; ?>

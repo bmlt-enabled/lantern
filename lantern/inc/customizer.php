@@ -33,16 +33,6 @@ function lantern_customize_register( WP_Customize_Manager $wp_customize ) {
             'default' => '',
             'type'    => 'text',
         ),
-        'weekly_meeting_count' => array(
-            'label'   => __( 'Weekly meeting count (shown in hero)', 'lantern' ),
-            'default' => '',
-            'type'    => 'text',
-        ),
-        'area_count' => array(
-            'label'   => __( 'Number of areas (shown in hero)', 'lantern' ),
-            'default' => '',
-            'type'    => 'text',
-        ),
     );
 
     foreach ( $controls as $key => $args ) {
@@ -75,13 +65,23 @@ function lantern_customize_register( WP_Customize_Manager $wp_customize ) {
         'type'        => 'text',
     ) );
     $wp_customize->add_setting( 'lantern_helpline_copy', array(
-        'default'           => '',
+        'default'           => __( 'A recovering addict is on the other end. Calls are confidential. Available day or night, holidays included.', 'lantern' ),
         'sanitize_callback' => 'sanitize_textarea_field',
     ) );
     $wp_customize->add_control( 'lantern_helpline_copy', array(
         'section'     => 'lantern_helpline',
         'label'       => __( 'Helpline supporting copy', 'lantern' ),
         'type'        => 'textarea',
+    ) );
+    $wp_customize->add_setting( 'lantern_contact_email', array(
+        'default'           => '',
+        'sanitize_callback' => 'sanitize_email',
+    ) );
+    $wp_customize->add_control( 'lantern_contact_email', array(
+        'section'     => 'lantern_helpline',
+        'label'       => __( 'Contact email', 'lantern' ),
+        'description' => __( 'Shown beside the helpline in the footer and homepage strip. Leave blank to hide.', 'lantern' ),
+        'type'        => 'email',
     ) );
 
     /* ===================== BMLT / Plugin connections ===================== */
@@ -129,20 +129,43 @@ function lantern_customize_register( WP_Customize_Manager $wp_customize ) {
         'priority' => 35,
     ) );
 
+    $defaults = lantern_home_field_defaults();
+
     // key => [ label, input-type, css-selector-in-front-page ]
     $home_fields = array(
-        'home_tagline'    => array( __( 'Hero tagline (HTML allowed: em, span.lantern-underline)', 'lantern' ), 'textarea', '.lantern-hero__title' ),
-        'home_lede'       => array( __( 'Hero lede paragraph', 'lantern' ),         'textarea', '.lantern-hero__lede' ),
-        'hero_quote'      => array( __( 'Hero quote (aside)', 'lantern' ),          'text',     '.lantern-edit-hero-quote' ),
-        'about_blurb'     => array( __( 'About paragraph 1', 'lantern' ),           'textarea', '.lantern-edit-about-blurb' ),
-        'about_blurb_2'   => array( __( 'About paragraph 2', 'lantern' ),           'textarea', '.lantern-edit-about-blurb-2' ),
-        'pillar_quote'    => array( __( 'Pillar quote (dark band)', 'lantern' ),    'textarea', '.lantern-edit-pillar-quote' ),
-        'closing_title'   => array( __( 'Closing CTA title (HTML allowed)', 'lantern' ), 'text',     '.lantern-edit-closing-title' ),
-        'closing_lede'    => array( __( 'Closing CTA paragraph', 'lantern' ),       'textarea', '.lantern-edit-closing-lede' ),
+        'home_tagline'           => array( __( 'Hero tagline (HTML allowed: em, span.lantern-underline)', 'lantern' ), 'textarea', '.lantern-hero__title' ),
+        'home_lede'              => array( __( 'Hero lede paragraph', 'lantern' ),         'textarea', '.lantern-hero__lede' ),
+        'hero_quote'             => array( __( 'Hero quote (aside)', 'lantern' ),          'text',     '.lantern-edit-hero-quote' ),
+        'about_blurb'            => array( __( 'About paragraph 1', 'lantern' ),           'textarea', '.lantern-edit-about-blurb' ),
+        'about_blurb_2'          => array( __( 'About paragraph 2', 'lantern' ),           'textarea', '.lantern-edit-about-blurb-2' ),
+        'pillar_quote'           => array( __( 'Pillar quote (dark band)', 'lantern' ),    'textarea', '.lantern-edit-pillar-quote' ),
+        'stat_meetings_value'    => array( __( 'Stat: weekly meetings (value)', 'lantern' ), 'text',   '.lantern-edit-stat-meetings-value' ),
+        'stat_meetings_label'    => array( __( 'Stat: weekly meetings (label)', 'lantern' ), 'text',   '.lantern-edit-stat-meetings-label' ),
+        'stat_countries_value'   => array( __( 'Stat: countries (value)', 'lantern' ),     'text',     '.lantern-edit-stat-countries-value' ),
+        'stat_countries_label'   => array( __( 'Stat: countries (label)', 'lantern' ),     'text',     '.lantern-edit-stat-countries-label' ),
+        'side_cleantime_label'   => array( __( 'Side card: Cleantime (label)', 'lantern' ),  'text',   '.lantern-edit-side-cleantime-label' ),
+        'side_cleantime_value'   => array( __( 'Side card: Cleantime (value)', 'lantern' ),  'text',   '.lantern-edit-side-cleantime-value' ),
+        'side_meetings_label'    => array( __( 'Side card: Meeting finder (label)', 'lantern' ), 'text', '.lantern-edit-side-meetings-label' ),
+        'side_meetings_value'    => array( __( 'Side card: Meeting finder (value)', 'lantern' ), 'text', '.lantern-edit-side-meetings-value' ),
+        'side_events_label'      => array( __( 'Side card: Events (label)', 'lantern' ),    'text',     '.lantern-edit-side-events-label' ),
+        'side_events_value'      => array( __( 'Side card: Events (value)', 'lantern' ),    'text',     '.lantern-edit-side-events-value' ),
+        'pathways_eyebrow'       => array( __( 'Pathways section: eyebrow', 'lantern' ),    'text',     '.lantern-edit-pathways-eyebrow' ),
+        'pathways_title'         => array( __( 'Pathways section: heading', 'lantern' ),   'text',     '.lantern-edit-pathways-title' ),
+        'pathway_help_title'     => array( __( 'Pathway 01: title', 'lantern' ),           'text',     '.lantern-edit-pathway-help-title' ),
+        'pathway_help_desc'      => array( __( 'Pathway 01: description', 'lantern' ),     'textarea', '.lantern-edit-pathway-help-desc' ),
+        'pathway_help_cta'       => array( __( 'Pathway 01: link label', 'lantern' ),      'text',     '.lantern-edit-pathway-help-cta' ),
+        'pathway_meeting_title'  => array( __( 'Pathway 02: title', 'lantern' ),           'text',     '.lantern-edit-pathway-meeting-title' ),
+        'pathway_meeting_desc'   => array( __( 'Pathway 02: description', 'lantern' ),     'textarea', '.lantern-edit-pathway-meeting-desc' ),
+        'pathway_meeting_cta'    => array( __( 'Pathway 02: link label', 'lantern' ),      'text',     '.lantern-edit-pathway-meeting-cta' ),
+        'pathway_serve_title'    => array( __( 'Pathway 03: title', 'lantern' ),           'text',     '.lantern-edit-pathway-serve-title' ),
+        'pathway_serve_desc'     => array( __( 'Pathway 03: description', 'lantern' ),     'textarea', '.lantern-edit-pathway-serve-desc' ),
+        'pathway_serve_cta'      => array( __( 'Pathway 03: link label', 'lantern' ),      'text',     '.lantern-edit-pathway-serve-cta' ),
+        'closing_title'          => array( __( 'Closing CTA title (HTML allowed)', 'lantern' ), 'text',     '.lantern-edit-closing-title' ),
+        'closing_lede'           => array( __( 'Closing CTA paragraph', 'lantern' ),       'textarea', '.lantern-edit-closing-lede' ),
     );
     foreach ( $home_fields as $key => $args ) {
         $wp_customize->add_setting( 'lantern_' . $key, array(
-            'default'           => '',
+            'default'           => $defaults[ $key ] ?? '',
             'sanitize_callback' => 'wp_kses_post',
             'transport'         => 'postMessage',
         ) );
@@ -163,19 +186,56 @@ function lantern_customize_register( WP_Customize_Manager $wp_customize ) {
         }
     }
 
+    // Optional service-body "about" block, rendered before the closing CTA.
+    // Plain refresh transport because the block isn't in the DOM until both
+    // fields are filled in.
+    $wp_customize->add_setting( 'lantern_custom_section_title', array(
+        'default'           => '',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'lantern_custom_section_title', array(
+        'section'     => 'lantern_home',
+        'label'       => __( 'About-us block: heading', 'lantern' ),
+        'description' => __( 'Optional. Add a heading + body to introduce your service body. The block hides when both are empty.', 'lantern' ),
+        'type'        => 'text',
+    ) );
+    $wp_customize->add_setting( 'lantern_custom_section_body', array(
+        'default'           => '',
+        'sanitize_callback' => 'wp_kses_post',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'lantern_custom_section_body', array(
+        'section'     => 'lantern_home',
+        'label'       => __( 'About-us block: body (basic HTML allowed)', 'lantern' ),
+        'type'        => 'textarea',
+    ) );
+
     /* ===================== Footer ===================== */
     $wp_customize->add_section( 'lantern_footer', array(
         'title'    => __( 'Footer', 'lantern' ),
         'priority' => 40,
     ) );
     $footer_fields = array(
-        'footer_about'      => array( __( 'About blurb', 'lantern' ),  'textarea' ),
-        'footer_disclaimer' => array( __( 'Disclaimer', 'lantern' ),   'text' ),
-        'footer_motto'      => array( __( 'Motto / tradition line', 'lantern' ), 'textarea' ),
+        'footer_about'      => array(
+            __( 'About blurb', 'lantern' ),
+            'textarea',
+            __( 'A regional Narcotics Anonymous service body. We are a non-profit fellowship of recovering addicts who meet regularly to help each other stay clean.', 'lantern' ),
+        ),
+        'footer_disclaimer' => array(
+            __( 'Disclaimer', 'lantern' ),
+            'text',
+            '',
+        ),
+        'footer_motto'      => array(
+            __( 'Motto / tradition line', 'lantern' ),
+            'textarea',
+            __( '“Our common welfare should come first; personal recovery depends on NA unity.”', 'lantern' ),
+        ),
     );
     foreach ( $footer_fields as $key => $args ) {
         $wp_customize->add_setting( 'lantern_' . $key, array(
-            'default'           => '',
+            'default'           => $args[2],
             'sanitize_callback' => 'wp_kses_post',
         ) );
         $wp_customize->add_control( 'lantern_' . $key, array(
@@ -212,23 +272,54 @@ function lantern_customize_register( WP_Customize_Manager $wp_customize ) {
 add_action( 'customize_register', 'lantern_customize_register' );
 
 /**
+ * Default copy for the homepage Customizer fields. Used both as the
+ * `default` on each setting (so the Customizer controls show the existing
+ * copy instead of empty inputs) and by the selective-refresh render
+ * callback so the preview keeps working when a setting is unset.
+ */
+function lantern_home_field_defaults() {
+    return array(
+        'home_tagline'         => __( 'You never have to <em>use</em> again. You never have to be <span class="lantern-underline">alone.</span>', 'lantern' ),
+        'home_lede'            => __( 'A community of recovering addicts in service to each other. Find a meeting, read today\'s meditation, or reach the helpline.', 'lantern' ),
+        'hero_quote'           => __( '“We do recover.”', 'lantern' ),
+        'about_blurb'          => __( 'Narcotics Anonymous is a global, peer-based program of recovery from addiction. Membership is free, requires only the desire to stop using, and is open to any addict regardless of substance. We meet, in-person and online, in church basements, community centers, hospitals, and prisons — every day of the week.', 'lantern' ),
+        'about_blurb_2'        => __( 'The program is non-religious, non-political, and not affiliated with any other organization. It is a fellowship — members helping members, one day at a time.', 'lantern' ),
+        'pillar_quote'         => __( '“The therapeutic value of one addict helping another is without parallel.”', 'lantern' ),
+        'stat_meetings_value'  => __( '79,000+', 'lantern' ),
+        'stat_meetings_label'  => __( 'weekly meetings worldwide', 'lantern' ),
+        'stat_countries_value' => __( '143', 'lantern' ),
+        'stat_countries_label' => __( 'countries reached', 'lantern' ),
+        'side_cleantime_label' => __( 'Cleantime', 'lantern' ),
+        'side_cleantime_value' => __( 'How long have you been clean?', 'lantern' ),
+        'side_meetings_label'  => __( 'Meeting finder', 'lantern' ),
+        'side_meetings_value'  => __( 'In-person · Online', 'lantern' ),
+        'side_events_label'    => __( 'Events', 'lantern' ),
+        'side_events_value'    => __( 'Conventions, workshops', 'lantern' ),
+        'pathways_eyebrow'     => __( 'Where to start', 'lantern' ),
+        'pathways_title'       => __( 'Three ways to take part.', 'lantern' ),
+        'pathway_help_title'   => __( 'I need help', 'lantern' ),
+        'pathway_help_desc'    => __( 'New, returning, or someone you love is struggling. Start with a meeting, the helpline, or a few words on what NA actually is.', 'lantern' ),
+        'pathway_help_cta'     => __( 'Newcomer info', 'lantern' ),
+        'pathway_meeting_title' => __( 'Find a meeting', 'lantern' ),
+        'pathway_meeting_desc'  => __( 'Search by city, day, time, or format. In-person and online meetings happen every day of the week.', 'lantern' ),
+        'pathway_meeting_cta'   => __( 'Open the finder', 'lantern' ),
+        'pathway_serve_title'  => __( 'I serve', 'lantern' ),
+        'pathway_serve_desc'   => __( 'Subcommittee minutes, event submissions, literature orders, and the trusted-servant calendar live behind the Members door.', 'lantern' ),
+        'pathway_serve_cta'    => __( 'For members', 'lantern' ),
+        'closing_title'        => __( 'Whatever it takes. <em>Today.</em>', 'lantern' ),
+        'closing_lede'         => __( 'You don\'t have to be clean to walk into a meeting. You just have to want to be.', 'lantern' ),
+    );
+}
+
+/**
  * Render one home-page editable field for the Customizer's selective-refresh
  * preview. The output must match what front-page.php emits inside the same
  * wrapper element (the selector points at), so a partial refresh swaps just
  * the text node without breaking layout.
  */
 function lantern_render_home_partial( $key ) {
-    $defaults = array(
-        'home_tagline'  => __( 'You never have to <em>use</em> again. You never have to be <span class="lantern-underline">alone.</span>', 'lantern' ),
-        'home_lede'     => __( 'A community of recovering addicts in service to each other. Find a meeting, read today\'s meditation, or reach the helpline.', 'lantern' ),
-        'hero_quote'    => __( '“We do recover.”', 'lantern' ),
-        'about_blurb'   => __( 'Narcotics Anonymous is a global, peer-based program of recovery from addiction. Membership is free, requires only the desire to stop using, and is open to any addict regardless of substance. We meet, in-person and online, in church basements, community centers, hospitals, and prisons — every day of the week.', 'lantern' ),
-        'about_blurb_2' => __( 'The program is non-religious, non-political, and not affiliated with any other organization. It is a fellowship — members helping members, one day at a time.', 'lantern' ),
-        'pillar_quote'  => __( '“The therapeutic value of one addict helping another is without parallel.”', 'lantern' ),
-        'closing_title' => __( 'Whatever it takes. <em>Today.</em>', 'lantern' ),
-        'closing_lede'  => __( 'You don\'t have to be clean to walk into a meeting. You just have to want to be.', 'lantern' ),
-    );
-    $value = lantern_option( $key, $defaults[ $key ] ?? '' );
+    $defaults = lantern_home_field_defaults();
+    $value    = lantern_option( $key, $defaults[ $key ] ?? '' );
 
     // home_tagline allows light inline markup — others are plain text.
     if ( in_array( $key, array( 'home_tagline', 'closing_title' ), true ) ) {

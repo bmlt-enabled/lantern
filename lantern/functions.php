@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-define( 'LANTERN_VERSION', '1.0.1' );
+define( 'LANTERN_VERSION', '1.0.2' );
 define( 'LANTERN_DIR', trailingslashit( get_template_directory() ) );
 define( 'LANTERN_URI', trailingslashit( get_template_directory_uri() ) );
 
@@ -192,6 +192,13 @@ function lantern_helpline_number() {
 }
 function lantern_helpline_tel() {
     return preg_replace( '/[^0-9+]/', '', (string) lantern_helpline_number() );
+}
+
+/**
+ * Contact email (sanitized). Blank when unset — callers should gate on it.
+ */
+function lantern_contact_email() {
+    return sanitize_email( (string) get_theme_mod( 'lantern_contact_email', '' ) );
 }
 
 /**

@@ -56,7 +56,7 @@ function lantern_register_block_patterns() {
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"align":"center"} -->
-<p class="has-text-align-center">A community of recovering addicts meets every day of the week — in person, online, and hybrid.</p>
+<p class="has-text-align-center">A community of recovering addicts meets every day of the week — in person and online.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
