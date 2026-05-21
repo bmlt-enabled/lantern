@@ -334,12 +334,13 @@ if ( ! empty( $events ) || $mayo_available ) : ?>
 
 <!-- ===================== JOURNAL / ANNOUNCEMENTS ===================== -->
 <?php
-$latest = new WP_Query( array(
+$show_announcements = (bool) get_theme_mod( 'lantern_show_announcements', true );
+$latest = $show_announcements ? new WP_Query( array(
     'post_type'      => 'post',
     'posts_per_page' => 3,
     'no_found_rows'  => true,
-) );
-if ( $latest->have_posts() ) : ?>
+) ) : null;
+if ( $latest && $latest->have_posts() ) : ?>
 <section class="lantern-section">
     <div class="lantern-shell">
         <header class="lantern-flex" style="justify-content: space-between; margin-bottom: 2rem; align-items: end;">

@@ -186,6 +186,19 @@ function lantern_customize_register( WP_Customize_Manager $wp_customize ) {
         }
     }
 
+    // Show / hide the homepage Announcements (journal) section.
+    $wp_customize->add_setting( 'lantern_show_announcements', array(
+        'default'           => true,
+        'sanitize_callback' => 'wp_validate_boolean',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'lantern_show_announcements', array(
+        'section'     => 'lantern_home',
+        'label'       => __( 'Show Announcements section', 'lantern' ),
+        'description' => __( 'Uncheck to hide the journal/blog cards on the homepage even when posts exist.', 'lantern' ),
+        'type'        => 'checkbox',
+    ) );
+
     // Optional service-body "about" block, rendered before the closing CTA.
     // Plain refresh transport because the block isn't in the DOM until both
     // fields are filled in.
