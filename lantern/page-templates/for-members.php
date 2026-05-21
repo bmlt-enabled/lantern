@@ -52,12 +52,26 @@ get_header(); ?>
             </p>
         <?php endif; ?>
 
-        <?php if ( lantern_has_shortcode( 'bmltwf-meeting-update-form' ) ) : ?>
-            <hr class="lantern-rule">
-            <h2 style="font-size: var(--lantern-step-3);"><?php esc_html_e( 'Update a meeting', 'lantern' ); ?></h2>
-            <p><?php esc_html_e( 'Submit an add, change, or close request — it will be reviewed by a trusted servant before it goes live.', 'lantern' ); ?></p>
-            <?php echo do_shortcode( '[bmltwf-meeting-update-form]' ); ?>
-        <?php endif; ?>
+        <?php
+        // Wrap the BMLTWF shortcode defensively — if the plugin's handler
+        // throws (version mismatch, missing dep, etc.) we'd rather hide the
+        // block than 500 the whole template.
+        if ( lantern_has_shortcode( 'bmltwf-meeting-update-form' ) ) :
+            try {
+                $bmltwf_output = do_shortcode( '[bmltwf-meeting-update-form]' );
+            } catch ( \Throwable $e ) {
+                $bmltwf_output = '';
+                if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+                    error_log( 'Lantern: bmltwf-meeting-update-form threw: ' . $e->getMessage() );
+                }
+            }
+            if ( trim( (string) $bmltwf_output ) !== '' ) : ?>
+                <hr class="lantern-rule">
+                <h2 style="font-size: var(--lantern-step-3);"><?php esc_html_e( 'Update a meeting', 'lantern' ); ?></h2>
+                <p><?php esc_html_e( 'Submit an add, change, or close request — it will be reviewed by a trusted servant before it goes live.', 'lantern' ); ?></p>
+                <?php echo $bmltwf_output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped — shortcode output ?>
+            <?php endif;
+        endif; ?>
     </div>
 </section>
 
