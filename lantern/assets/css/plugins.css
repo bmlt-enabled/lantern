@@ -387,6 +387,83 @@
 }
 
 /* ----------------------------------------------------------------
+   Fetch Meditation — tabs + accordion (the JFT / SPAD selector view).
+   Plugin defaults to stark white cards; retint to paper so it blends
+   with Lantern's parchment background. Selectors are `body`-prefixed
+   so specificity (0,1,1) outranks the plugin's plain class selectors
+   regardless of stylesheet load order.
+   ---------------------------------------------------------------- */
+body .meditation-tabs-container,
+body .meditation-accordion-container {
+    font-family: var(--lantern-body);
+    color: var(--lantern-ink);
+}
+
+/* Tab strip */
+body .meditation-tab-list {
+    border-bottom-color: var(--lantern-ink-line);
+}
+body .meditation-tab-button {
+    background: var(--lantern-paper-deep);
+    border-color: var(--lantern-ink-line);
+    color: var(--lantern-ink-soft);
+    font-family: var(--lantern-body);
+    border-top-left-radius: var(--lantern-radius);
+    border-top-right-radius: var(--lantern-radius);
+}
+body .meditation-tab-button:hover {
+    background: var(--lantern-paper);
+    color: var(--lantern-ink);
+}
+body .meditation-tab-button:focus {
+    box-shadow: 0 0 0 3px rgba(199, 87, 43, 0.25);
+}
+body .meditation-tab-button.active {
+    background: var(--lantern-paper);
+    color: var(--lantern-ink);
+    border-color: var(--lantern-ink-line);
+    border-bottom-color: var(--lantern-paper);
+}
+
+/* Tab content card — was stark white */
+body .meditation-tab-content {
+    background: var(--lantern-paper);
+    border-color: var(--lantern-ink-line);
+    border-bottom-left-radius: var(--lantern-radius);
+    border-bottom-right-radius: var(--lantern-radius);
+    border-top-right-radius: var(--lantern-radius);
+}
+
+/* Accordion */
+body .meditation-accordion-item {
+    border-color: var(--lantern-ink-line);
+    background: var(--lantern-paper);
+}
+body .meditation-accordion-button {
+    background: var(--lantern-paper-deep);
+    color: var(--lantern-ink);
+    font-family: var(--lantern-body);
+}
+body .meditation-accordion-button:hover { background: var(--lantern-paper); }
+body .meditation-accordion-button.active { background: var(--lantern-paper); }
+body .meditation-accordion-button:focus {
+    outline-color: rgba(199, 87, 43, 0.5);
+}
+body .meditation-accordion-icon { border-top-color: var(--lantern-ember); }
+body .meditation-accordion-panel {
+    background: var(--lantern-paper);
+    border-top-color: var(--lantern-ink-line);
+}
+
+/* "Read more" link on excerpts */
+body .meditation-read-more {
+    color: var(--lantern-ember);
+}
+body .meditation-read-more:hover {
+    color: var(--lantern-ember-deep);
+}
+
+/* ----------------------------------------------------------------
    NACC (cleantime calculator)
    ---------------------------------------------------------------- */
 .lantern-nacc-wrap [id*="nacc"],

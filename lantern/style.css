@@ -906,6 +906,235 @@ code, kbd, pre, samp { font-family: var(--lantern-mono); font-size: 0.9em; }
     max-width: 60ch;
 }
 
+/* ============================================================
+   Literature page template
+   ============================================================ */
+.lantern-lit-heading {
+    font-size: var(--lantern-step-3);
+    margin: 0 0 1.25rem;
+}
+.lantern-lit-subheading {
+    font-size: var(--lantern-step-1);
+    margin: 2.5rem 0 0.75rem;
+}
+.lantern-lit-intro {
+    font-size: var(--lantern-step-0);
+    color: var(--lantern-ink-soft);
+    margin: 0 0 1.5rem;
+    max-width: 60ch;
+}
+
+.lantern-lit-section {
+    background: var(--lantern-paper-deep);
+    border: 1px solid var(--lantern-ink-line);
+    border-radius: var(--lantern-radius);
+    margin-bottom: 1rem;
+    overflow: hidden;
+}
+.lantern-lit-section__summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.1rem 1.5rem;
+    font-family: var(--lantern-display);
+    font-size: var(--lantern-step-2);
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+}
+.lantern-lit-section__summary::-webkit-details-marker { display: none; }
+.lantern-lit-section__chevron {
+    font-size: 1rem;
+    color: var(--lantern-ink-faint);
+    transition: transform 200ms ease;
+}
+.lantern-lit-section[open] .lantern-lit-section__chevron { transform: rotate(180deg); }
+
+.lantern-lit-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1rem;
+    padding: 1.25rem;
+    background: var(--lantern-paper);
+    border-top: 1px solid var(--lantern-ink-line);
+}
+.lantern-lit-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: var(--lantern-paper-deep);
+    border: 1px solid var(--lantern-ink-line);
+    border-radius: calc(var(--lantern-radius) - 4px);
+    text-decoration: none;
+    color: var(--lantern-ink);
+    text-align: center;
+    transition: transform 150ms ease, border-color 150ms ease, background 150ms ease, box-shadow 150ms ease;
+}
+.lantern-lit-card:hover,
+.lantern-lit-card:focus-visible {
+    transform: translateY(-2px);
+    background: var(--lantern-paper);
+    border-color: var(--lantern-ember);
+    box-shadow: 0 6px 20px -8px rgba(26, 37, 56, 0.18);
+}
+.lantern-lit-card__cover {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    background: var(--lantern-paper);
+    border-radius: calc(var(--lantern-radius) - 8px);
+}
+.lantern-lit-card__cover img {
+    max-width: 90%;
+    max-height: 90%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+.lantern-lit-card__title {
+    font-size: var(--lantern-step--1);
+    line-height: 1.3;
+    font-weight: 500;
+}
+
+.lantern-ebook-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin: 0 0 1rem;
+}
+.lantern-ebook-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.85rem;
+    min-height: 9.5rem;
+    padding: 1.75rem 1.5rem;
+    background: var(--lantern-paper-deep);
+    border: 1px solid var(--lantern-ink-line);
+    border-radius: var(--lantern-radius);
+    text-decoration: none;
+    color: var(--lantern-ink);
+    transition: transform 150ms ease, border-color 150ms ease, background 150ms ease, color 150ms ease;
+}
+.lantern-ebook-card:hover,
+.lantern-ebook-card:focus-visible {
+    transform: translateY(-2px);
+    border-color: var(--lantern-ember);
+    background: var(--lantern-paper);
+    color: var(--lantern-ember);
+}
+.lantern-ebook-card__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    color: var(--lantern-ink);
+    transition: color 150ms ease;
+}
+.lantern-ebook-card:hover .lantern-ebook-card__icon,
+.lantern-ebook-card:focus-visible .lantern-ebook-card__icon { color: var(--lantern-ember); }
+.lantern-ebook-card__icon svg { width: 100%; height: 100%; }
+.lantern-ebook-card__name {
+    font-family: var(--lantern-display);
+    font-size: var(--lantern-step-1);
+    text-align: center;
+    color: var(--lantern-ink);
+}
+
+.lantern-lit-gift-list {
+    margin: 0 0 2rem;
+    padding-left: 1.25rem;
+}
+.lantern-lit-gift-list li { margin-bottom: 0.4rem; }
+.lantern-lit-gift-list a { color: var(--lantern-ember); }
+
+.lantern-lit-disclaimer {
+    font-size: var(--lantern-step--1);
+    color: var(--lantern-ink-faint);
+    border-top: 1px solid var(--lantern-ink-line);
+    padding-top: 1.5rem;
+    margin-top: 2rem;
+    max-width: 70ch;
+}
+
+/* ============================================================
+   For Professionals page template
+   ============================================================ */
+.lantern-prof-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+.lantern-prof-item {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    padding: 1.5rem;
+    background: var(--lantern-paper-deep);
+    border: 1px solid var(--lantern-ink-line);
+    border-left: 3px solid var(--lantern-ember);
+    border-radius: var(--lantern-radius);
+}
+.lantern-prof-item__thumb {
+    flex-shrink: 0;
+    display: block;
+    width: 96px;
+    line-height: 0;
+}
+.lantern-prof-item__thumb img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+.lantern-prof-item__body {
+    flex: 1;
+    min-width: 0;
+}
+.lantern-prof-item__title {
+    font-size: var(--lantern-step-1);
+    margin: 0 0 0.5rem;
+    line-height: 1.25;
+}
+.lantern-prof-item__title a {
+    color: var(--lantern-ink);
+    text-decoration: none;
+}
+.lantern-prof-item__title a:hover,
+.lantern-prof-item__title a:focus-visible { color: var(--lantern-ember); }
+.lantern-prof-item__pdf {
+    display: inline-block;
+    margin-left: 0.5rem;
+    font-family: var(--lantern-body);
+    font-size: var(--lantern-step--2);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--lantern-ink-faint);
+    vertical-align: middle;
+}
+.lantern-prof-item__desc {
+    margin: 0;
+    color: var(--lantern-ink-soft);
+    font-size: var(--lantern-step-0);
+    line-height: 1.55;
+}
+
+@media (max-width: 540px) {
+    .lantern-prof-item { flex-direction: column; gap: 1rem; }
+    .lantern-prof-item__thumb { width: 80px; }
+}
+
 .lantern-post-meta {
     display: flex;
     flex-wrap: wrap;

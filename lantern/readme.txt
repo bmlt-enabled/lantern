@@ -98,6 +98,8 @@ See [CHANGELOG.md](https://github.com/bmlt-enabled/bmlt-wp-theme/blob/main/CHANG
 * Worldwide-stats values on the about band, the three "Today" side cards, and the full pathways section (eyebrow + heading + all three cards' title/description/link label) are all Customizer-backed with click-to-edit pencils.
 * New optional "About us" block on the homepage (heading + body, basic HTML allowed) — hidden until you fill it in.
 * New "Contact email" field in the Helpline section, rendered in the footer and homepage strip with an "Email us:" label.
+* New Literature page template — collapsible Booklets / Pamphlets / Group Readings accordions plus an E-Literature retailer grid (Apple Books, Amazon Kindle, Google Play, Barnes & Noble) and gift-link list.
+* New For Professionals page template — NA's cooperation intro paragraph followed by ten professionally-targeted pamphlets (Membership Survey, A Resource in Your Community, etc.) as image-left / text-right cards. Thumbnails are vendored locally; PDFs link to na.org.
 * Pathways default heading changed from "Three doors, one fellowship." to "Three ways to take part." and the worldwide weekly-meetings figure updated from 76,000+ to 79,000+.
 * Copy cleanup: dropped "hybrid" from four places (people search in-person vs. online) and dropped "dances" from the Events side-card descriptor.
 * Removed the unused `weekly_meeting_count` and `area_count` Service Body fields.

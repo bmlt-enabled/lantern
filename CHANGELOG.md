@@ -31,8 +31,41 @@ release workflow will take care of the rest.
   helper), rendered in the footer and the homepage helpline strip with an
   "Email us:" label. The homepage strip now shows whenever the helpline
   OR the email is set.
+- **For Professionals page template** (`Template Name: For Professionals`)
+  built from the alnwfl / mvana service-body precedent. Opens with NA's
+  standard cooperation intro paragraph, then lists ten professional-
+  facing pamphlets (Membership Survey, A Resource in Your Community,
+  Information about NA, For Those in Treatment, By Young Addicts, An
+  Introduction to NA Meetings, NA Groups and Medication, In Times of
+  Illness, NA & Persons Receiving MAT, Mental Health in Recovery) as
+  image-left / text-right cards. Each card links directly to the
+  current `na.org` PDF. Thumbnails (~20KB each) are vendored under
+  `assets/img/professionals/` so the page is self-contained. The intro
+  paragraph can be replaced per-site by writing content in the page
+  body (block editor); the canned default kicks in when the page is
+  empty.
+- **Literature page template** (`Template Name: Literature`) modeled on
+  the south-coastal-NA layout: a "Recovery Literature" group with
+  collapsible Booklets / Informational Pamphlets / Group Readings
+  accordions (built on native `<details>`) showing each title's cover
+  image, followed by an "E-Literature" retailer grid (Apple Books, Amazon
+  Kindle, Google Play, Barnes & Noble), a "How to gift books" link list,
+  and an NA World Services disclaimer. All 40 titles are pre-wired with
+  their canonical `na.org/e-lit/...` reading-page URLs and the matching
+  cover thumbnails hot-linked from NA's CDN (no images bundled with the
+  theme). The four retailer cards ship with inline `currentColor` SVG
+  marks (Apple, Amazon, Google Play, Barnes & Noble) that tint on hover.
+  Lists are hard-coded arrays at the top of the template so service
+  bodies can edit titles, URLs, or cover image paths without a Customizer
+  round-trip.
 
 ### Changed
+- Fetch Meditation tabs + accordion now blend with the parchment
+  background instead of rendering as stark white cards. Overrides the
+  plugin's `.meditation-tab-content`, `.meditation-tab-button`,
+  `.meditation-accordion-button`, `.meditation-accordion-panel`, and
+  related selectors to use Lantern's paper/paper-deep tones, ink-line
+  borders, and ember focus + read-more accents.
 - Hero aside redesigned: removed the "At a glance" stats card (cost,
   requirement, weekly/area counts) — it read like a product comparison and
   was off-tone for an NA fellowship site. The aside is now a single larger
