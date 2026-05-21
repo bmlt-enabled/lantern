@@ -46,17 +46,19 @@ Create pages with these slugs and Lantern will discover them automatically:
 | `helpline`                           | Helpline             | Large clickable number, FAQ                        |
 | `public`                             | For the Public       | Newcomer / families / professionals / literature   |
 | `members`                            | For Members          | Minutes, subcommittees, events, BMLT-Workflow form |
+| `professionals`                      | For Professionals    | Curated NA literature for professionals            |
+| `literature`                         | Literature           | Booklets / IPs / Group Readings + e-book retailers |
 | `about`                              | (default)            | About-NA pillar page — linked from hero            |
 
 ## Customization
 
 All branding lives in **Appearance → Customize**:
 
-- **Service Body** — name, tagline, founded year, weekly meeting count, area count
-- **Helpline** — phone number + supporting copy (shown in header, footer, homepage strip)
+- **Service Body** — name, tagline, founded year
+- **Helpline** — phone number, contact email, supporting copy (shown in header, footer, homepage strip)
 - **Page links** — point each themed slot (Newcomer, Members, Cleantime, Meditation, Events, Helpline, For the Public, Families, Professionals, Literature, Minutes, Subcommittees, Meeting changes, Service guides, Printable list, Meeting finder, About) at any page. Slots with no page hide their card instead of dead-linking.
 - **BMLT & plugins** — root server URL
-- **Homepage copy** — every line of homepage text is editable. Click directly on the text in the Customizer preview to jump to its setting.
+- **Homepage copy** — every line of homepage text is editable. Click directly on the text in the Customizer preview to jump to its setting. Includes an optional service-body "About us" block (heading + body, basic HTML allowed) that renders before the closing CTA when filled in, and a checkbox to hide the Announcements (journal) section.
 - **Footer** — about blurb, disclaimer, motto / tradition line
 - **Palette** — override Paper, Ink, Ember, or Sage to recolor the entire theme
 
