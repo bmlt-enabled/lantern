@@ -24,6 +24,7 @@ Out of the box, Lantern auto-detects and integrates with:
 * **Fetch Meditation** — the homepage "Today" panel shows the JFT excerpt; a dedicated Daily Meditation page template runs the tabbed both-books view.
 * **NACC** — the Cleantime Calculator page template renders the calculator with the Lantern type/color system.
 * **BMLT-Workflow** — the For Members page template can render the meeting update form.
+* **BMLT Minutes** — the Minutes page template publishes committee meeting minutes via the [minutes] shortcode.
 * **Bread** — the Members page links to the PDF meeting list when present.
 
 Every shortcode integration is defensive: if a plugin isn't installed, Lantern shows a clear notice with the plugin name and where to get it, instead of breaking.
@@ -39,9 +40,10 @@ After install, create pages with these slugs (or pick them in Customize → BMLT
 * `/helpline` — uses Helpline template
 * `/public` — uses For the Public template
 * `/members` — uses For Members template
+* `/minutes` — uses Minutes template (BMLT Minutes plugin)
 * `/about` — pillar page (linked from hero)
 * `/newcomer`, `/for-families`, `/professionals`, `/literature` — linked from For the Public
-* `/minutes`, `/subcommittees`, `/meeting-changes`, `/service-guides`, `/meeting-list` — linked from For Members
+* `/subcommittees`, `/meeting-changes`, `/service-guides`, `/meeting-list` — linked from For Members
 
 = Customizing =
 
@@ -93,6 +95,7 @@ Yes. All user-facing strings use the `lantern` text domain. Drop a `.mo` file in
 See [CHANGELOG.md](https://github.com/bmlt-enabled/bmlt-wp-theme/blob/main/CHANGELOG.md) for the full version history.
 
 = 1.0.2 =
+* New Minutes page template — integrates the BMLT Minutes plugin's [minutes] shortcode behind a defensive check, with the output restyled to the Lantern palette.
 * Replaced the "At a glance" hero aside (cost/requirement stats card) with a single larger pull-quote.
 * Customizer Homepage, Helpline, and Footer text controls now open pre-populated with their default copy instead of empty inputs.
 * Worldwide-stats values on the about band, the three "Today" side cards, and the full pathways section (eyebrow + heading + all three cards' title/description/link label) are all Customizer-backed with click-to-edit pencils.

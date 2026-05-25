@@ -18,6 +18,7 @@ Lantern auto-detects and integrates with the following — install only what you
 | [Fetch Meditation](https://wordpress.org/plugins/fetch-meditation/)       | JFT / SPAD readings         | Front page "Today" panel + Daily Meditation template |
 | [NACC](https://wordpress.org/plugins/nacc-wordpress-plugin/)              | Cleantime calculator        | Cleantime template                                   |
 | [BMLT-Workflow](https://github.com/bmlt-enabled/bmlt-workflow)            | Meeting update form         | For Members template                                 |
+| [BMLT Minutes](https://wordpress.org/plugins/bmlt-minutes/)               | Committee minutes archive   | Minutes page template                                |
 | [Bread](https://wordpress.org/plugins/bmlt-meeting-list/)                 | PDF meeting list            | Linked from For Members                              |
 
 Lantern supports either Crumb or Crouton as the BMLT meeting finder — pick whichever your service body already uses. The Meeting Finder template embeds whichever is active; if neither is installed, the page shows a friendly notice linking to both.
@@ -46,6 +47,7 @@ Create pages with these slugs and Lantern will discover them automatically:
 | `helpline`                           | Helpline             | Large clickable number, FAQ                        |
 | `public`                             | For the Public       | Newcomer / families / professionals / literature   |
 | `members`                            | For Members          | Minutes, subcommittees, events, BMLT-Workflow form |
+| `minutes`                            | Minutes              | BMLT Minutes committee minutes archive             |
 | `professionals`                      | For Professionals    | Curated NA literature for professionals            |
 | `literature`                         | Literature           | Booklets / IPs / Group Readings + e-book retailers |
 | `about`                              | (default)            | About-NA pillar page — linked from hero            |
