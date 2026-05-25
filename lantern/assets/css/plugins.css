@@ -601,6 +601,88 @@ body .meditation-read-more:hover {
 }
 
 /* ----------------------------------------------------------------
+   BMLT Minutes (committee minutes archive)
+   The plugin exposes no CSS variables, so we target its .bmlt-minutes__*
+   class hooks (defined in bmlt-minutes/css/minutes.css) and rebind the
+   hardcoded greys/blue to the Lantern palette. Used by the Minutes page
+   template and the singular minutes permalink's "View Document" button.
+   ---------------------------------------------------------------- */
+.lantern-minutes-wrap {
+    background: var(--lantern-paper);
+    border: 1px solid var(--lantern-ink-line);
+    border-radius: var(--lantern-radius);
+    padding: clamp(1.25rem, 2vw, 2rem);
+}
+
+.lantern-minutes-wrap .bmlt-minutes {
+    font-family: var(--lantern-body);
+    font-size: var(--lantern-step--1);
+    color: var(--lantern-ink);
+}
+
+.lantern-minutes-wrap .bmlt-minutes--empty {
+    color: var(--lantern-ink-faint);
+}
+
+/* Committee / year headings */
+.lantern-minutes-wrap .bmlt-minutes__group {
+    font-family: var(--lantern-display);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--lantern-ink);
+    border-bottom: 1px solid var(--lantern-ember);
+}
+
+.lantern-minutes-wrap .bmlt-minutes__item {
+    border-bottom: 1px solid var(--lantern-ink-line);
+}
+
+.lantern-minutes-wrap .bmlt-minutes__icon {
+    color: var(--lantern-ink-faint);
+}
+
+.lantern-minutes-wrap .bmlt-minutes__title {
+    color: var(--lantern-ink);
+}
+
+.lantern-minutes-wrap .bmlt-minutes__date {
+    color: var(--lantern-ink-faint);
+}
+
+.lantern-minutes-wrap .bmlt-minutes__excerpt {
+    color: var(--lantern-ink-soft);
+}
+
+/* File-type badge — tint from the palette so it retunes on override */
+.lantern-minutes-wrap .bmlt-minutes__type {
+    background: var(--lantern-paper-deep);
+    color: var(--lantern-ink-soft);
+}
+.lantern-minutes-wrap .bmlt-minutes__type--locked {
+    background: color-mix(in srgb, var(--lantern-ember) 14%, var(--lantern-paper));
+    color: var(--lantern-ember-deep);
+}
+.lantern-minutes-wrap .bmlt-minutes__item--locked .bmlt-minutes__icon {
+    color: var(--lantern-ember-deep);
+}
+
+/* "View Document" button — both in-template and on the singular permalink */
+.lantern-minutes-wrap .bmlt-minutes__button,
+.bmlt-minutes__single-link .bmlt-minutes__button {
+    background: var(--lantern-ember);
+    border-radius: var(--lantern-radius);
+    font-family: var(--lantern-body);
+    color: var(--lantern-paper);
+}
+.lantern-minutes-wrap .bmlt-minutes__button:hover,
+.lantern-minutes-wrap .bmlt-minutes__button:focus,
+.bmlt-minutes__single-link .bmlt-minutes__button:hover,
+.bmlt-minutes__single-link .bmlt-minutes__button:focus {
+    background: var(--lantern-ember-deep);
+    color: var(--lantern-paper);
+}
+
+/* ----------------------------------------------------------------
    Notices (plugin not active)
    ---------------------------------------------------------------- */
 .lantern-notice {

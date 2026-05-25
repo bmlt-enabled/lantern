@@ -11,9 +11,14 @@ release workflow will take care of the rest.
 
 ## [Unreleased]
 
-## [1.0.2] - 2026-05-20
+## [1.0.2] - 2026-05-25
 
 ### Added
+- BMLT Minutes integration: a new **Minutes** page template (slug `minutes`)
+  renders the plugin's `[minutes]` shortcode behind a defensive
+  `lantern_has_shortcode()` check, degrading to a notice when the plugin is
+  inactive. The `.bmlt-minutes__*` output is rebound to the Lantern palette
+  in `assets/css/plugins.css`.
 - The four worldwide-stats values on the about band (weekly-meetings value
   and label, countries value and label) are now Customizer-backed with
   click-to-edit pencils via `selective_refresh` partials.

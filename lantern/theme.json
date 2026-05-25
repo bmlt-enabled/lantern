@@ -116,6 +116,7 @@
         { "name": "helpline",       "title": "Helpline",          "postTypes": [ "page" ] },
         { "name": "for-public",     "title": "For the Public",    "postTypes": [ "page" ] },
         { "name": "for-members",    "title": "For Members",       "postTypes": [ "page" ] },
+        { "name": "minutes",        "title": "Minutes",           "postTypes": [ "page" ] },
         { "name": "wide",           "title": "Wide (full-bleed content)", "postTypes": [ "page", "post" ] }
     ]
 }
